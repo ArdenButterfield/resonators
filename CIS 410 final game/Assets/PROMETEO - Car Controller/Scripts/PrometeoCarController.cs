@@ -19,9 +19,21 @@ public class PrometeoCarController : MonoBehaviour
 
     //CAR SETUP
 
+
+
       [Space(20)]
       //[Header("CAR SETUP")]
+
+      
+
+
       [Space(10)]
+      [Range(0,100)]
+
+      // TODO: WHAT THE HECK!?
+      KeyCode forward_key = KeyCode.T;
+      //print(forward_key);
+
       [Range(20, 190)]
       public int maxSpeed = 90; //The maximum speed that the car can reach in km/h.
       [Range(10, 120)]
@@ -161,6 +173,7 @@ public class PrometeoCarController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+      print(forward_key);
       //In this part, we set the 'carRigidbody' value with the Rigidbody attached to this
       //gameObject. Also, we define the center of mass of the car with the Vector3 given
       //in the inspector.
@@ -327,7 +340,8 @@ public class PrometeoCarController : MonoBehaviour
 
       }else{
 
-        if(Input.GetKey(KeyCode.W)){
+        if(Input.GetKey(forward_key)){
+          print(forward_key);
           CancelInvoke("DecelerateCar");
           deceleratingCar = false;
           GoForward();
@@ -352,10 +366,10 @@ public class PrometeoCarController : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Space)){
           RecoverTraction();
         }
-        if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))){
+        if((!Input.GetKey(KeyCode.S) && !Input.GetKey(forward_key))){
           ThrottleOff();
         }
-        if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W)) && !Input.GetKey(KeyCode.Space) && !deceleratingCar){
+        if((!Input.GetKey(KeyCode.S) && !Input.GetKey(forward_key)) && !Input.GetKey(KeyCode.Space) && !deceleratingCar){
           InvokeRepeating("DecelerateCar", 0f, 0.1f);
           deceleratingCar = true;
         }
