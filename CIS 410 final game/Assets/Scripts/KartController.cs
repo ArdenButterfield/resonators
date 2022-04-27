@@ -5,6 +5,13 @@ using UnityEngine;
 
 public class KartController : MonoBehaviour
 {
+    // We added this part:
+    public NitroManager nitroManager;
+    // When we are in boost mode, it increases our top speed as well as our
+    // acceleration. But by how much?
+    public float boostSpeedMultiplier = 2;
+    public float boostAccelerationMultiplier = 2;
+
     [System.Serializable]
     public class StatPowerup
     {
@@ -166,6 +173,8 @@ public class KartController : MonoBehaviour
     public void SetCanMove(bool move) => m_CanMove = move;
     public float GetMaxSpeed() => Mathf.Max(m_FinalStats.TopSpeed, m_FinalStats.ReverseSpeed);
 
+    private bool in_boost_mode;
+
     void UpdateSuspensionParams(WheelCollider wheel)
     {
         wheel.suspensionDistance = SuspensionHeight;
@@ -187,6 +196,7 @@ public class KartController : MonoBehaviour
         UpdateSuspensionParams(RearRightWheel);
 
         m_CurrentGrip = baseStats.Grip;
+        in_boost_mode = false;
     }
 
     void FixedUpdate()
@@ -221,6 +231,7 @@ public class KartController : MonoBehaviour
         // apply vehicle physics
         if (m_CanMove)
         {
+            CheckBoost();
             MoveVehicle(Input.Accelerate, Input.Brake, Input.TurnInput);
         }
         GroundAirbourne();
@@ -228,6 +239,20 @@ public class KartController : MonoBehaviour
         m_PreviousGroundPercent = GroundPercent;
 
         AnimateWheelMeshes();   // doesn't work atm 
+    }
+
+    // This function is added by us (Arden Butterfield, April 26).
+    void CheckBoost()
+    {
+        if (Input.Boost) {
+            print("boosting");
+        }
+        if (Input.Boost && nitroManager.BurnNitro())
+        {
+            in_boost_mode = true;
+        } else {
+            in_boost_mode = false;
+        }
     }
 
     void GatherInputs()
@@ -363,6 +388,13 @@ public class KartController : MonoBehaviour
         // use the max speed for the direction we are going--forward or reverse.
         float maxSpeed = localVelDirectionIsFwd ? m_FinalStats.TopSpeed : m_FinalStats.ReverseSpeed;
         float accelPower = accelDirectionIsFwd ? m_FinalStats.Acceleration : m_FinalStats.ReverseAcceleration;
+
+        // If we are in boost mode, we want more speed and acceleration power! Zoom zoom zoom!
+        // We added this part (Arden Butterfield Apr. 26)
+        if (in_boost_mode) {
+            maxSpeed *= boostSpeedMultiplier;
+            accelPower *= boostAccelerationMultiplier;
+        }
 
         float currentSpeed = Rigidbody.velocity.magnitude;
         float accelRampT = currentSpeed / maxSpeed;

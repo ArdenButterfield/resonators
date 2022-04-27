@@ -6,6 +6,7 @@ public struct InputData
 {
     public bool Accelerate;
     public bool Brake;
+    public bool Boost;
     public float TurnInput;
 }
 
