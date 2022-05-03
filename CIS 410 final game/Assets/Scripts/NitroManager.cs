@@ -13,12 +13,13 @@ public class NitroManager : MonoBehaviour
     private const float maxNitro = 10f;
     public float nitroAddStep = 0.5f;
     public float nitroBurnStep = 0.01f;
+    public float startingNitroAmount = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
         NitroMeter.maxValue = maxNitro;
-        nitroLevel = 0f;
+        nitroLevel = startingNitroAmount;
         UpdateSlider();
     }
 

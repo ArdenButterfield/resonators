@@ -244,9 +244,6 @@ public class KartController : MonoBehaviour
     // This function is added by us (Arden Butterfield, April 26).
     void CheckBoost()
     {
-        if (Input.Boost) {
-            print("boosting");
-        }
         if (Input.Boost && nitroManager.BurnNitro())
         {
             in_boost_mode = true;
