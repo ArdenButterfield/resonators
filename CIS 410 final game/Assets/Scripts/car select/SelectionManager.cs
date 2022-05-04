@@ -1,3 +1,5 @@
+// by Arden Butterfield, last modified May 4
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 
 
-public class rotatecar : MonoBehaviour
+public class SelectionManager : MonoBehaviour
 {
     public Transform[] CarTransforms;
     public string[] CarDescriptions;
@@ -20,13 +22,23 @@ public class rotatecar : MonoBehaviour
     public float RotationSpeed = 10f;
 
     private int selected_item;
+    private int selectedPlayer;
     
     
     // Start is called before the first frame update
     void Start()
     {
+        selectedPlayer = PlayerPrefs.GetInt("Selected player");
         step.eulerAngles = new Vector3(0, 0.2f, 0);
-        selected_item = 0;
+        if (selectedPlayer == 1)
+        {
+            selected_item = PlayerPrefs.GetInt("Player 1 car");
+        }
+        else
+        {
+            selected_item = PlayerPrefs.GetInt("Player 2 car");
+        }
+        
         setCameraPosition();
         InfoText.text = CarDescriptions[selected_item];
     }
@@ -73,6 +85,16 @@ public class rotatecar : MonoBehaviour
 
     public void ExitSelection()
     {
+        if (selectedPlayer == 1)
+        {
+            PlayerPrefs.SetInt("Player 1 car", selected_item);
+        }
+        else 
+        {
+            PlayerPrefs.SetInt("Player 2 car", selected_item);
+        }
+        PlayerPrefs.Save();
+        
         SceneManager.LoadScene("title screen");
     }
 }

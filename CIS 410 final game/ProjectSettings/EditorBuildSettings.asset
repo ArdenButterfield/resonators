@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/title screen.unity
     guid: 81b5b69b0155d43ad88961bd5de5cbd0
   - enabled: 1
-    path: Assets/Scenes/carselect.unity
+    path: Assets/Scenes/car select.unity
     guid: 1ec134aae43f04dc381d8349d47da3f6
   - enabled: 1
     path: Assets/Scenes/track01_assets/track01_scene.unity
