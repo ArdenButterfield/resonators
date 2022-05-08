@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Required for Slider
+ 
+using TMPro;
+
 
 
 public class NitroManager : MonoBehaviour
@@ -11,9 +14,9 @@ public class NitroManager : MonoBehaviour
     public Slider NitroMeter;
     private float nitroLevel;
     private const float maxNitro = 10f;
-    public float nitroAddStep = 0.5f;
     public float nitroBurnStep = 0.01f;
-    public float startingNitroAmount = 10f;
+    public float startingNitroAmount = 0f;
+    public float nitroCoinAmount = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +26,20 @@ public class NitroManager : MonoBehaviour
         UpdateSlider();
     }
 
+    private void OnTriggerEnter(Collider other) 
+    {
+        if (other.gameObject.CompareTag("Nitro")) 
+        {
+            other.gameObject.SetActive(false);
+            AddNitro(nitroCoinAmount);
+        }
+    }
+
     // Called by the car when the car picks up coins. I guess this is
     // the observer pattern or something ;-)
-    void AddNitro()
+    void AddNitro(float amount)
     {
-        nitroLevel += nitroAddStep;
+        nitroLevel += amount;
         if (nitroLevel > maxNitro)
         {
             nitroLevel = maxNitro;
