@@ -9,29 +9,36 @@ public class CoinBehavior : MonoBehaviour
     public GameObject[] ChildrenToHide;
     float lastCollisionTime;
     public float recoveryTime = 5.0f;
+    bool active;
+
     void Start()
     {
         gameObject.tag = "Nitro";
         lastCollisionTime = Time.time - recoveryTime;
     }
 
-    public void PickupCoin()
+    public bool PickupCoin()
     {
-        print("setting inactive");
-        for (int i = 0; i < ChildrenToHide.Length; i++) {
-            ChildrenToHide[i].SetActive(false);
+        bool wasActiveBefore = active;
+        if (active) {
+            print("setting inactive");
+            for (int i = 0; i < ChildrenToHide.Length; i++) {
+                ChildrenToHide[i].SetActive(false);
+            }
+            lastCollisionTime = Time.time;
+            active = false;
         }
-        lastCollisionTime = Time.time;
+        return wasActiveBefore;
     }
 
     void Update()
     {
-        if (Time.time - lastCollisionTime >= recoveryTime)
-        {
-            print("setting active")
+        if ((!active) && (Time.time - lastCollisionTime >= recoveryTime)) {
+            print("setting active");
             for (int i = 0; i < ChildrenToHide.Length; i++) {
                 ChildrenToHide[i].SetActive(true);
             }
+            active = true;
         }
     } 
 }

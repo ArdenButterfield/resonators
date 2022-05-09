@@ -32,9 +32,10 @@ public class NitroManager : MonoBehaviour
         {
             print("colliding");
             CoinBehavior coinScript = other.gameObject.GetComponent<CoinBehavior>();
-            print(coinScript);
-            coinScript.PickupCoin();
-            AddNitro(nitroCoinAmount);
+            if (coinScript.PickupCoin()) {
+                AddNitro(nitroCoinAmount);
+            }
+            
         }
     }
 
