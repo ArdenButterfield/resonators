@@ -28,6 +28,7 @@ public class NitroManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
+        print("colliding");
         if (other.gameObject.CompareTag("Nitro")) 
         {
             other.gameObject.SetActive(false);
