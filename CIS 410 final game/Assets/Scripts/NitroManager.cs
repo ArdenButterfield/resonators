@@ -28,10 +28,12 @@ public class NitroManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        print("colliding");
         if (other.gameObject.CompareTag("Nitro")) 
         {
-            other.gameObject.SetActive(false);
+            print("colliding");
+            CoinBehavior coinScript = other.gameObject.GetComponent<CoinBehavior>();
+            print(coinScript);
+            coinScript.PickupCoin();
             AddNitro(nitroCoinAmount);
         }
     }
