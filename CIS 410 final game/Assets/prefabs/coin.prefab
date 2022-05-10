@@ -50,6 +50,7 @@ MonoBehaviour:
   ChildrenToHide:
   - {fileID: 5482580935120062949}
   - {fileID: 5482580937002000066}
+  recoveryTime: 1.5
 --- !u!135 &8338131140244646888
 SphereCollider:
   m_ObjectHideFlags: 0

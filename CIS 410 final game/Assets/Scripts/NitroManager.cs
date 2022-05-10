@@ -13,10 +13,10 @@ public class NitroManager : MonoBehaviour
 {
     public Slider NitroMeter;
     private float nitroLevel;
-    private const float maxNitro = 10f;
-    public float nitroBurnStep = 0.01f;
-    public float startingNitroAmount = 0f;
-    public float nitroCoinAmount = 1.0f;
+    private const float maxNitro = 12f;
+    private float nitroBurnStep = 3f;
+    private float startingNitroAmount = 0f;
+    private float nitroCoinAmount = 2.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class NitroManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Nitro")) 
         {
-            print("colliding");
+            //print("colliding");
             CoinBehavior coinScript = other.gameObject.GetComponent<CoinBehavior>();
             if (coinScript.PickupCoin()) {
                 AddNitro(nitroCoinAmount);
@@ -51,20 +51,23 @@ public class NitroManager : MonoBehaviour
         UpdateSlider();
     }
 
-    public bool BurnNitro()
+    public bool EnoughNitro(bool isBoosting)
     {
-        // Attempts to burn nitro, returns if successful.
-        bool enoughFuel;
-        if (nitroLevel >= nitroBurnStep)
+        bool enoughFuel = false;
+        if (nitroLevel >= nitroBurnStep && !isBoosting)
         {
-            nitroLevel -= nitroBurnStep;
             enoughFuel = true;
-        } else {
-            nitroLevel = 0f;
-            enoughFuel = false;
+            BurnNitro();
         }
-        UpdateSlider();
+
         return enoughFuel;
+    }
+
+    void BurnNitro()
+    {
+        nitroLevel -= nitroBurnStep;
+
+        UpdateSlider();
     }
 
     void UpdateSlider()

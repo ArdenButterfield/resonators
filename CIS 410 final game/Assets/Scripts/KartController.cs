@@ -1,135 +1,145 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Reference Credit: ArcadeKart.cs from Karting Microgame @ learn.unity.com/project/karting-template
+// Adapted by: Donny Ebel (mechanics manager), Arden Butterfield, Oliver Hostick
+
+/*  To Do:
+ *  Implement Boost
+ *  Implement Drifting
+ *  Consider turning suspension wheels into a list and adding a helper function to update suspension
+ * 
+ */
+
 public class KartController : MonoBehaviour
 {
-    // We added this part:
-    public NitroManager nitroManager;
-    // When we are in boost mode, it increases our top speed as well as our
-    // acceleration. But by how much?
-    public float boostSpeedMultiplier = 2;
-    public float boostAccelerationMultiplier = 2;
-
-    [System.Serializable]
-    public class StatPowerup
-    {
-        public Stats modifiers;
-        public string PowerUpID;
-        public float ElapsedTime;
-        public float MaxTime;
-    }
-
+    // Kart base stats
     [System.Serializable]
     public struct Stats
     {
-        [Header("Movement Settings")]
-        [Min(0.001f), Tooltip("Top speed attainable when moving forward.")]
+        // Stat struct declaration
         public float TopSpeed;
-
-        [Tooltip("How quickly the kart reaches top speed.")]
         public float Acceleration;
-
-        [Min(0.001f), Tooltip("Top speed attainable when moving backward.")]
         public float ReverseSpeed;
-
-        [Tooltip("How quickly the kart reaches top speed, when moving backward.")]
         public float ReverseAcceleration;
+        public float AccelerationCurve;     // How quickly kart accelerates from 0
+        public float Braking;               // How quickly kart slows when brakes are applied
+        public float CoastingDrag;          // How quickly kart will reach full stop with no inputs
+        public float Grip;                  // Amount of side-to-side friction
+        public float Steer;                 // The kart's handling
+        public float AddedGravity;          // Extra gravity for airbourne state.
 
-        [Tooltip("How quickly the kart starts accelerating from 0. A higher number means it accelerates faster sooner.")]
-        [Min(0.2f)]
-        public float AccelerationCurve;
-
-        [Tooltip("How quickly the kart slows down when the brake is applied.")]
-        public float Braking;
-
-        [Tooltip("How quickly the kart will reach a full stop when no inputs are made.")]
-        public float CoastingDrag;
-
-        [Range(0.0f, 1.0f)]
-        [Tooltip("The amount of side-to-side friction.")]
-        public float Grip;
-
-        [Tooltip("How tightly the kart can turn left or right.")]
-        public float Steer;
-
-        [Tooltip("Additional gravity for when the kart is in the air.")]
-        public float AddedGravity;
-
-        // allow for stat adding for powerups.
+        // Overloads the + operator to easily add Stat structs.
         public static Stats operator +(Stats a, Stats b)
         {
             return new Stats
             {
-                Acceleration        = a.Acceleration + b.Acceleration,
-                AccelerationCurve   = a.AccelerationCurve + b.AccelerationCurve,
-                Braking             = a.Braking + b.Braking,
-                CoastingDrag        = a.CoastingDrag + b.CoastingDrag,
-                AddedGravity        = a.AddedGravity + b.AddedGravity,
-                Grip                = a.Grip + b.Grip,
+                Acceleration = a.Acceleration + b.Acceleration,
+                AccelerationCurve = a.AccelerationCurve + b.AccelerationCurve,
+                Braking = a.Braking + b.Braking,
+                CoastingDrag = a.CoastingDrag + b.CoastingDrag,
+                AddedGravity = a.AddedGravity + b.AddedGravity,
+                Grip = a.Grip + b.Grip,
                 ReverseAcceleration = a.ReverseAcceleration + b.ReverseAcceleration,
-                ReverseSpeed        = a.ReverseSpeed + b.ReverseSpeed,
-                TopSpeed            = a.TopSpeed + b.TopSpeed,
-                Steer               = a.Steer + b.Steer,
+                ReverseSpeed = a.ReverseSpeed + b.ReverseSpeed,
+                TopSpeed = a.TopSpeed + b.TopSpeed,
+                Steer = a.Steer + b.Steer,
             };
         }
     }
 
-    public Rigidbody Rigidbody { get; private set; }
-    public InputData Input     { get; private set; }
-    public float AirPercent    { get; private set; }
+    // Necessary game objects
+    public Rigidbody Rigidbody { get; private set; }        // references the physical kart
+    public InputData Input { get; private set; }            // initializes the Input struct; KartInput.cs
+    IInput[] Inputs;                                        // list of IInputs where generated inputs are stored
+    public float AirPercent { get; private set; }           // AirPercent/GroundPercent track how many wheels are grounded
     public float GroundPercent { get; private set; }
+    public bool WantsToDrift { get; private set; } = false; // Indicate drifting status
+    public bool IsDrifting { get; private set; } = false;
+    bool HasCollision = false;
+    bool InAir = false;
 
-    public Stats baseStats = new Stats
+    // Stat parameters
+    static private float topSpeed = 50f;
+    static private float acceleration = 1f;
+    static private float reverseSpeed = 15f;
+    static private float reverseAcceleration = 0.7f;
+    static private float accelerationCurve = 4f;
+    static private float braking = 4f;
+    static private float coastingDrag = 10f;
+    static private float grip = 0.9f;
+    static private float steer = 5f;
+    static private float addedGravity = 1f;
+
+    // Boost
+    public NitroManager nitroManager;
+    bool isBoosting = false;
+    float boostTimer = 0.0f;
+
+    // Instantiate a Stats struct; 
+    private Stats BaseStats = new Stats
     {
-        TopSpeed            = 10f,
-        Acceleration        = 5f,
-        AccelerationCurve   = 4f,
-        Braking             = 10f,
-        ReverseAcceleration = 5f,
-        ReverseSpeed        = 5f,
-        Steer               = 5f,
-        CoastingDrag        = 4f,
-        Grip                = .95f,
-        AddedGravity        = 1f,
+        TopSpeed = topSpeed,
+        Acceleration = acceleration,
+        ReverseSpeed = reverseSpeed,
+        ReverseAcceleration = reverseAcceleration,
+        AccelerationCurve = accelerationCurve,
+        Braking = braking,
+        CoastingDrag = coastingDrag,
+        Grip = grip,
+        Steer = steer,
+        AddedGravity = addedGravity
     };
 
-    [Header("Vehicle Physics")]
-    [Tooltip("The transform that determines the position of the kart's mass.")]
-    public Transform CenterOfMass;
+    // FinalStats is initially a copyp of BaseStats, but boosting changes this.
+    private Stats FinalStats = new Stats
+    {
+        TopSpeed = topSpeed,
+        Acceleration = acceleration,
+        ReverseSpeed = reverseSpeed,
+        ReverseAcceleration = reverseAcceleration,
+        AccelerationCurve = accelerationCurve,
+        Braking = braking,
+        CoastingDrag = coastingDrag,
+        Grip = grip,
+        Steer = steer,
+        AddedGravity = addedGravity
+    };
 
-    [Range(0.0f, 20.0f), Tooltip("Coefficient used to reorient the kart in the air. The higher the number, the faster the kart will readjust itself along the horizontal plane.")]
-    public float AirborneReorientationCoefficient = 3.0f;
+    // This struct is for applying a boost. This is added directly to BaseStats
+    private Stats BoostedStats = new Stats
+    {
+        TopSpeed = 30f,
+        Acceleration = 10f,
+        ReverseSpeed = 0,
+        ReverseAcceleration = 0,
+        AccelerationCurve = 0,
+        Braking = 0,
+        CoastingDrag = 0,
+        Grip = 0,
+        Steer = 0,
+        AddedGravity = 0
+    };
 
-    [Header("Drifting")]
-    [Range(0.01f, 1.0f), Tooltip("The grip value when drifting.")]
-    public float DriftGrip = 0.4f;
-    [Range(0.0f, 10.0f), Tooltip("Additional steer when the kart is drifting.")]
-    public float DriftAdditionalSteer = 5.0f;
-    [Range(1.0f, 30.0f), Tooltip("The higher the angle, the easier it is to regain full grip.")]
-    public float MinAngleToFinishDrift = 10.0f;
-    [Range(0.01f, 0.99f), Tooltip("Mininum speed percentage to switch back to full grip.")]
-    public float MinSpeedPercentToFinishDrift = 0.5f;
-    [Range(1.0f, 20.0f), Tooltip("The higher the value, the easier it is to control the drift steering.")]
-    public float DriftControl = 10.0f;
-    [Range(0.0f, 20.0f), Tooltip("The lower the value, the longer the drift will last without trying to control it by steering.")]
-    public float DriftDampening = 10.0f;
+    // Drift Params
+    float DriftGrip = 0.4f;
+    float DriftAdditionalSteer = 5.0f;
+    float MinAngleToFinishDrift = 10.0f;
+    float MinSpeedPercentToFinishDrift = 10.0f;
+    float DriftControl = 10.0f;
+    float DriftDampening = 10.0f;
+    float CurrentGrip = 1.0f;
+    float DriftTurningPower = 0.0f;
+    float PreviousGroundPercent = 1.0f;
 
-    [Header("Suspensions")]
-    [Tooltip("The maximum extension possible between the kart's body and the wheels.")]
-    [Range(0.0f, 1.0f)]
-    public float SuspensionHeight = 0.2f;
-    [Range(10.0f, 100000.0f), Tooltip("The higher the value, the stiffer the suspension will be.")]
-    public float SuspensionSpring = 20000.0f;
-    [Range(0.0f, 5000.0f), Tooltip("The higher the value, the faster the kart will stabilize itself.")]
-    public float SuspensionDamp = 500.0f;
-    [Tooltip("Vertical offset to adjust the position of the wheels relative to the kart's body.")]
-    [Range(-1.0f, 1.0f)]
-    public float WheelsPositionVerticalOffset = 0.0f;
-
-    [Header("Physical Wheels")]
-    [Tooltip("The physical representations of the Kart's wheels.")]
+    // Suspension Params and Wheel Objects
+    public Transform CenterOfMass;                      // attatch kart collider parent obj here in Inspector
+    float AirborneReorientationCoeff = 3.0f;     // how quickly the kart rights itself while airborne
+    float SuspensionHeight = 0.2f;
+    float SuspensionSpring = 20000.0f;
+    float SuspensionDamp = 500.0f;
+    float WheelsPositionVerticalOffset = 0.0f;
     public WheelCollider FrontLeftWheel;
     public WheelCollider FrontRightWheel;
     public WheelCollider RearLeftWheel;
@@ -139,41 +149,112 @@ public class KartController : MonoBehaviour
     public GameObject RearLeftMesh;
     public GameObject RearRightMesh;
 
-    [Tooltip("Which layers the wheels will detect.")]
+    // Sets which layers the physics engine cares about
     public LayerMask GroundLayers = Physics.DefaultRaycastLayers;
 
-    // the input sources that can control the kart
-    IInput[] m_Inputs;
+    // Used to handle rotations and collisions
+    Quaternion LastValidRotation;
+    Vector3 LastValidPosition;      // not used
+    Vector3 LastCollisionNormal;
 
-    const float k_NullInput = 0.01f;
-    const float k_NullSpeed = 0.01f;
-    Vector3 m_VerticalReference = Vector3.up;
+    // Constants; useful for some move calculations
+    const float NullInput = 0.01f;
+    const float NullSpeed = 0.01f;
+    Vector3 VerticalReference = Vector3.up;
 
-    // Drift params
-    public bool WantsToDrift { get; private set; } = false;
-    public bool IsDrifting { get; private set; } = false;
-    float m_CurrentGrip = 1.0f;
-    float m_DriftTurningPower = 0.0f;
-    float m_PreviousGroundPercent = 1.0f;
-    readonly List<(GameObject trailRoot, WheelCollider wheel, TrailRenderer trail)> m_DriftTrailInstances = new List<(GameObject, WheelCollider, TrailRenderer)>();
-    readonly List<(WheelCollider wheel, float horizontalOffset, float rotation, ParticleSystem sparks)> m_DriftSparkInstances = new List<(WheelCollider, float, float, ParticleSystem)>();
+    // ====================== Primary Funcions ==========================
+    // Get necessary components and update state
+    void Awake()
+    {
+        // Hook up rigidbody, raw inputs, and assigns current grip (C# complained when attempted during init)
+        Rigidbody = GetComponent<Rigidbody>();
+        Inputs = GetComponents<IInput>();
+        CurrentGrip = FinalStats.Grip;
 
-    // can the kart move?
-    bool m_CanMove = true;
-    List<StatPowerup> m_ActivePowerupList = new List<StatPowerup>();
-    Stats m_FinalStats;
+        // Update suspension
+        UpdateSuspensionParams(FrontLeftWheel);
+        UpdateSuspensionParams(FrontRightWheel);
+        UpdateSuspensionParams(RearLeftWheel);
+        UpdateSuspensionParams(RearRightWheel);
+    }
 
-    Quaternion m_LastValidRotation;
-    Vector3 m_LastValidPosition;
-    Vector3 m_LastCollisionNormal;
-    bool m_HasCollision;
-    bool m_InAir = false;
+    void FixedUpdate()
+    {
+        // Update suspension params and get new centerOfMass
+        Rigidbody.centerOfMass = transform.InverseTransformPoint(CenterOfMass.position);
+        UpdateSuspensionParams(FrontLeftWheel);
+        UpdateSuspensionParams(FrontRightWheel);
+        UpdateSuspensionParams(RearLeftWheel);
+        UpdateSuspensionParams(RearRightWheel);
 
-    public void AddPowerup(StatPowerup statPowerup) => m_ActivePowerupList.Add(statPowerup);
-    public void SetCanMove(bool move) => m_CanMove = move;
-    public float GetMaxSpeed() => Mathf.Max(m_FinalStats.TopSpeed, m_FinalStats.ReverseSpeed);
+        // Generate inputs and check if we're fully airborne for this frame!
+        GetInputs();
+        GetGroundedPercent();       // Populates GroundPercent/AirPercent vars
+        AddAirborneGravity();       // If airborne, add a little extra gravity
 
-    private bool in_boost_mode;
+        // Move!
+        CheckBoost();
+        MoveVehicle(Input.Accelerate, Input.Brake, Input.TurnInput);
+
+        // Insert animation stuff here
+
+    }
+
+    // ====================== Helper Functions ==========================
+    // Collision Handlers; these are lambda functions. If either is invoked, it sets HasCollision flag appropriately.
+    void OnCollisionEnter(Collision collision) => HasCollision = true;
+    void OnCollisionExit(Collision collision) => HasCollision = false;
+
+    // This is called every frame there is a collision
+    void OnCollisionStay(Collision collision)
+    {
+        HasCollision = true;
+        LastCollisionNormal = Vector3.zero;
+        float dot = -1.0f;
+
+        // Looks at each point of contact in the collision and sets the normalized collision point.
+        foreach (var contact in collision.contacts)
+        {
+            if (Vector3.Dot(contact.normal, Vector3.up) > dot)
+                LastCollisionNormal = contact.normal;
+        }
+    }
+
+    void GetInputs()
+    {
+        Input = new InputData();
+        WantsToDrift = false;
+        for (int i = 0; i < Inputs.Length; i++)
+        {
+            Input = Inputs[i].GenerateInput();
+            WantsToDrift = Input.Brake && Vector3.Dot(Rigidbody.velocity, transform.forward) > 0.0f;
+        }
+    }
+
+    void GetGroundedPercent()
+    {
+        // Use suspension to determine how many wheels are grounded
+        int numGrounded = 0;
+        WheelHit hit;
+        if (FrontLeftWheel.isGrounded && FrontLeftWheel.GetGroundHit(out hit))
+            numGrounded++;
+        if (FrontRightWheel.isGrounded && FrontRightWheel.GetGroundHit(out hit))
+            numGrounded++;
+        if (RearLeftWheel.isGrounded && RearLeftWheel.GetGroundHit(out hit))
+            numGrounded++;
+        if (RearRightWheel.isGrounded && RearRightWheel.GetGroundHit(out hit))
+            numGrounded++;
+
+        // Apply findings to necessary variables
+        GroundPercent = (float)numGrounded / 4.0f;
+        AirPercent = 1 - GroundPercent;
+    }
+
+    void AddAirborneGravity()
+    {
+        if (AirPercent >= 1)
+            Rigidbody.velocity += Physics.gravity * Time.fixedDeltaTime * FinalStats.AddedGravity;
+    }
 
     void UpdateSuspensionParams(WheelCollider wheel)
     {
@@ -185,264 +266,101 @@ public class KartController : MonoBehaviour
         wheel.suspensionSpring = spring;
     }
 
-    void Awake()
-    {
-        Rigidbody = GetComponent<Rigidbody>();
-        m_Inputs = GetComponents<IInput>();
-
-        UpdateSuspensionParams(FrontLeftWheel);
-        UpdateSuspensionParams(FrontRightWheel);
-        UpdateSuspensionParams(RearLeftWheel);
-        UpdateSuspensionParams(RearRightWheel);
-
-        m_CurrentGrip = baseStats.Grip;
-        in_boost_mode = false;
-    }
-
-    void FixedUpdate()
-    {
-        UpdateSuspensionParams(FrontLeftWheel);
-        UpdateSuspensionParams(FrontRightWheel);
-        UpdateSuspensionParams(RearLeftWheel);
-        UpdateSuspensionParams(RearRightWheel);
-
-        GatherInputs();
-
-        // apply our powerups to create our finalStats
-        TickPowerups();
-
-        // apply our physics properties
-        Rigidbody.centerOfMass = transform.InverseTransformPoint(CenterOfMass.position);
-
-        int groundedCount = 0;
-        if (FrontLeftWheel.isGrounded && FrontLeftWheel.GetGroundHit(out WheelHit hit))
-            groundedCount++;
-        if (FrontRightWheel.isGrounded && FrontRightWheel.GetGroundHit(out hit))
-            groundedCount++;
-        if (RearLeftWheel.isGrounded && RearLeftWheel.GetGroundHit(out hit))
-            groundedCount++;
-        if (RearRightWheel.isGrounded && RearRightWheel.GetGroundHit(out hit))
-            groundedCount++;
-
-        // calculate how grounded and airborne we are
-        GroundPercent = (float) groundedCount / 4.0f;
-        AirPercent = 1 - GroundPercent;
-
-        // apply vehicle physics
-        if (m_CanMove)
-        {
-            CheckBoost();
-            MoveVehicle(Input.Accelerate, Input.Brake, Input.TurnInput);
-        }
-        GroundAirbourne();
-
-        m_PreviousGroundPercent = GroundPercent;
-
-        AnimateWheelMeshes();   // doesn't work atm 
-    }
-
-    // This function is added by us (Arden Butterfield, April 26).
     void CheckBoost()
     {
-        if (Input.Boost && nitroManager.BurnNitro())
+        // If user inputs boost AND there's enough nitro AND the timer was reset...
+        if (Input.Boost && nitroManager.EnoughNitro(isBoosting))
         {
-            in_boost_mode = true;
-        } else {
-            in_boost_mode = false;
+            // Set boosting to true, update stats
+            isBoosting = true;
+            FinalStats = BaseStats + BoostedStats;
         }
-    }
-
-    void GatherInputs()
-    {
-        // reset input
-        Input = new InputData();
-        WantsToDrift = false;
-
-        // gather nonzero input from our sources
-        for (int i = 0; i < m_Inputs.Length; i++)
+        // Otherwise, if boosting, update the timer.
+        else if (isBoosting)
+            boostTimer += Time.fixedDeltaTime;
+        
+        if (boostTimer > 1.5f)
         {
-            Input = m_Inputs[i].GenerateInput();
-            WantsToDrift = Input.Brake && Vector3.Dot(Rigidbody.velocity, transform.forward) > 0.0f;
+            isBoosting = false;
+            boostTimer = 0.0f;
+            FinalStats = BaseStats;
         }
-    }
-
-    void TickPowerups()
-    {
-        // remove all elapsed powerups
-        m_ActivePowerupList.RemoveAll((p) => { return p.ElapsedTime > p.MaxTime; });
-
-        // zero out powerups before we add them all up
-        var powerups = new Stats();
-
-        // add up all our powerups
-        for (int i = 0; i < m_ActivePowerupList.Count; i++)
-        {
-            var p = m_ActivePowerupList[i];
-
-            // add elapsed time
-            p.ElapsedTime += Time.fixedDeltaTime;
-
-            // add up the powerups
-            powerups += p.modifiers;
-        }
-
-        // add powerups to our final stats
-        m_FinalStats = baseStats + powerups;
-
-        // clamp values in finalstats
-        m_FinalStats.Grip = Mathf.Clamp(m_FinalStats.Grip, 0, 1);
-    }
-
-    void GroundAirbourne()
-    {
-        // while in the air, fall faster
-        if (AirPercent >= 1)
-        {
-            Rigidbody.velocity += Physics.gravity * Time.fixedDeltaTime * m_FinalStats.AddedGravity;
-        }
-    }
-
-    public void Reset()
-    {
-        Vector3 euler = transform.rotation.eulerAngles;
-        euler.x = euler.z = 0f;
-        transform.rotation = Quaternion.Euler(euler);
-    }
-
-    public float LocalSpeed()
-    {
-        if (m_CanMove)
-        {
-            float dot = Vector3.Dot(transform.forward, Rigidbody.velocity);
-            if (Mathf.Abs(dot) > 0.1f)
-            {
-                float speed = Rigidbody.velocity.magnitude;
-                return dot < 0 ? -(speed / m_FinalStats.ReverseSpeed) : (speed / m_FinalStats.TopSpeed);
-            }
-            return 0f;
-        }
-        else
-        {
-            // use this value to play kart sound when it is waiting the race start countdown.
-            return Input.Accelerate ? 1.0f : 0.0f;
-        }
-    }
-
-    void OnCollisionEnter(Collision collision) => m_HasCollision = true;
-    void OnCollisionExit(Collision collision) => m_HasCollision = false;
-
-    void OnCollisionStay(Collision collision)
-    {
-        m_HasCollision = true;
-        m_LastCollisionNormal = Vector3.zero;
-        float dot = -1.0f;
-
-        foreach (var contact in collision.contacts)
-        {
-            if (Vector3.Dot(contact.normal, Vector3.up) > dot)
-                m_LastCollisionNormal = contact.normal;
-        }
-    }
-
-    void AnimateWheelMeshes()
-    {
-        Quaternion FLWRotation;
-        Vector3 FLWPosition;
-        FrontLeftWheel.GetWorldPose(out FLWPosition, out FLWRotation);
-        FrontLeftMesh.transform.position = FLWPosition;
-        FrontLeftMesh.transform.rotation = FLWRotation;
-
-        Quaternion FRWRotation;
-        Vector3 FRWPosition;
-        FrontRightWheel.GetWorldPose(out FRWPosition, out FRWRotation);
-        FrontRightMesh.transform.position = FRWPosition;
-        FrontRightMesh.transform.rotation = FRWRotation;
-
-        Quaternion RLWRotation;
-        Vector3 RLWPosition;
-        RearLeftWheel.GetWorldPose(out RLWPosition, out RLWRotation);
-        RearLeftMesh.transform.position = RLWPosition;
-        RearLeftMesh.transform.rotation = RLWRotation;
-
-        Quaternion RRWRotation;
-        Vector3 RRWPosition;
-        RearRightWheel.GetWorldPose(out RRWPosition, out RRWRotation);
-        RearRightMesh.transform.position = RRWPosition;
-        RearRightMesh.transform.rotation = RRWRotation;
     }
 
     void MoveVehicle(bool accelerate, bool brake, float turnInput)
     {
-        float accelInput = (accelerate ? 1.0f : 0.0f) - (brake ? 1.0f : 0.0f);
-
-        // manual acceleration curve coefficient scalar
-        float accelerationCurveCoeff = 5;
+        // DETERMINE ACCELERATION
+        // Get current speed and velocity; set acceleration curve coefficient
+        float currentSpeed = Rigidbody.velocity.magnitude;
         Vector3 localVel = transform.InverseTransformVector(Rigidbody.velocity);
 
+        // Determine direction based on input: 1.0 means we are accelerating; 0.0 means no input or both accel/brake; -1 means braking
+        float accelInput = (accelerate ? 1.0f : 0.0f) - (brake ? 1.0f : 0.0f);
+
+        // Get current local velocity and speed, then determine current direction and where we want to go
         bool accelDirectionIsFwd = accelInput >= 0;
         bool localVelDirectionIsFwd = localVel.z >= 0;
 
-        // use the max speed for the direction we are going--forward or reverse.
-        float maxSpeed = localVelDirectionIsFwd ? m_FinalStats.TopSpeed : m_FinalStats.ReverseSpeed;
-        float accelPower = accelDirectionIsFwd ? m_FinalStats.Acceleration : m_FinalStats.ReverseAcceleration;
+        // Grab the correct speed/acceleration numbers based on direction... but if we're braking, use braking stats instead of accelPower.
+        float maxSpeed = localVelDirectionIsFwd ? FinalStats.TopSpeed : FinalStats.ReverseSpeed;
+        float accelPower = accelDirectionIsFwd ? FinalStats.Acceleration : FinalStats.ReverseAcceleration;
+        bool isBraking = (localVelDirectionIsFwd && brake) || (!localVelDirectionIsFwd && accelerate);
+        float finalAccelPower = isBraking ? FinalStats.Braking : accelPower;
 
-        // If we are in boost mode, we want more speed and acceleration power! Zoom zoom zoom!
-        // We added this part (Arden Butterfield Apr. 26)
-        if (in_boost_mode) {
-            maxSpeed *= boostSpeedMultiplier;
-            accelPower *= boostAccelerationMultiplier;
-        }
-
-        float currentSpeed = Rigidbody.velocity.magnitude;
+        // This clever bit uses currentSpeed/maxSpeed (value between 0 and 1) to accelerate more slowly the closer you are to your max speed.
+        float accelerationCurveCoeff = 5;
         float accelRampT = currentSpeed / maxSpeed;
-        float multipliedAccelerationCurve = m_FinalStats.AccelerationCurve * accelerationCurveCoeff;
+        float multipliedAccelerationCurve = FinalStats.AccelerationCurve * accelerationCurveCoeff;
         float accelRamp = Mathf.Lerp(multipliedAccelerationCurve, 1, accelRampT * accelRampT);
 
-        bool isBraking = (localVelDirectionIsFwd && brake) || (!localVelDirectionIsFwd && accelerate);
-
-        // if we are braking (moving reverse to where we are going)
-        // use the braking accleration instead
-        float finalAccelPower = isBraking ? m_FinalStats.Braking : accelPower;
-
+        // Yield finalAcceleration.
         float finalAcceleration = finalAccelPower * accelRamp;
 
-        // apply inputs to forward/backward
-        float turningPower = IsDrifting ? m_DriftTurningPower : turnInput * m_FinalStats.Steer;
 
+        // DETERMINE VELOCITY
+        // If we're drifting use drift turning; otherwise steer based on input
+        float turningPower = IsDrifting ? DriftTurningPower : turnInput * FinalStats.Steer;
+
+        // Multiply quaternion and the foward vector to yield a "toward" vector.
         Quaternion turnAngle = Quaternion.AngleAxis(turningPower, transform.up);
         Vector3 fwd = turnAngle * transform.forward;
-        Vector3 movement = fwd * accelInput * finalAcceleration * ((m_HasCollision || GroundPercent > 0.0f) ? 1.0f : 0.0f);
 
-        // forward movement
+        // Create movement vector by multiplying "toward" vector with accelInput and finalAcceleration.
+        // accelInput is -1 <= 0 <= 1, so either our angle is updated, reversed, or canceled.
+        // ableToTurn is similar; if we've crashed or we're in the air, we don't turn!
+        float ableToTurn = (HasCollision || GroundPercent > 0.0f) ? 1.0f : 0.0f;
+        Vector3 movement = fwd * finalAcceleration * accelInput * ableToTurn;
+
+        // If we're over max speed, don't go any faster!
         bool wasOverMaxSpeed = currentSpeed >= maxSpeed;
-
-        // if over max speed, cannot accelerate faster.
-        if (wasOverMaxSpeed && !isBraking) 
+        if (wasOverMaxSpeed && !isBraking && !isBoosting)
+        {
             movement *= 0.0f;
+        }
 
+        // Create temp vector to store updated calculations at this point.
         Vector3 newVelocity = Rigidbody.velocity + movement * Time.fixedDeltaTime;
         newVelocity.y = Rigidbody.velocity.y;
 
-        //  clamp max speed if we are on ground
+        //  Limit new velocity based on max speed.
         if (GroundPercent > 0.0f && !wasOverMaxSpeed)
-        {
             newVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
-        }
 
-        // coasting is when we aren't touching accelerate
-        if (Mathf.Abs(accelInput) < k_NullInput && GroundPercent > 0.0f)
-        {
-            newVelocity = Vector3.MoveTowards(newVelocity, new Vector3(0, Rigidbody.velocity.y, 0), Time.fixedDeltaTime * m_FinalStats.CoastingDrag);
-        }
+        // Apply drag if we're coasting OR we just stopped boosting and we're over max speed
+        // MoveTowards essentially shortens the y component by Stats.CoastingDrag
+        if ((Mathf.Abs(accelInput) < NullInput && GroundPercent > 0.0f) || (wasOverMaxSpeed && !isBoosting))
+            newVelocity = Vector3.MoveTowards(newVelocity, new Vector3(0, Rigidbody.velocity.y, 0), Time.fixedDeltaTime * FinalStats.CoastingDrag);
 
+        // Assign the newly calculated velocity.
         Rigidbody.velocity = newVelocity;
 
-        // Drift
+
+        // DRIFTING
         if (GroundPercent > 0.0f)
         {
-            if (m_InAir)
+            if (InAir)
             {
-                m_InAir = false;
+                InAir = false;
             }
 
             // manual angular velocity coefficient
@@ -450,7 +368,7 @@ public class KartController : MonoBehaviour
             float angularVelocitySmoothSpeed = 20f;
 
             // turning is reversed if we're going in reverse and pressing reverse
-            if (!localVelDirectionIsFwd && !accelDirectionIsFwd) 
+            if (!localVelDirectionIsFwd && !accelDirectionIsFwd)
                 angularVelocitySteering *= -1.0f;
 
             var angularVel = Rigidbody.angularVelocity;
@@ -466,14 +384,14 @@ public class KartController : MonoBehaviour
             float velocitySteering = 25f;
 
             // If the karts lands with a forward not in the velocity direction, we start the drift
-            if (GroundPercent >= 0.0f && m_PreviousGroundPercent < 0.1f)
+            if (GroundPercent >= 0.0f && PreviousGroundPercent < 0.1f)
             {
-                Vector3 flattenVelocity = Vector3.ProjectOnPlane(Rigidbody.velocity, m_VerticalReference).normalized;
+                Vector3 flattenVelocity = Vector3.ProjectOnPlane(Rigidbody.velocity, VerticalReference).normalized;
                 if (Vector3.Dot(flattenVelocity, transform.forward * Mathf.Sign(accelInput)) < Mathf.Cos(MinAngleToFinishDrift * Mathf.Deg2Rad))
                 {
                     IsDrifting = true;
-                    m_CurrentGrip = DriftGrip;
-                    m_DriftTurningPower = 0.0f;
+                    CurrentGrip = DriftGrip;
+                    DriftTurningPower = 0.0f;
                 }
             }
 
@@ -483,20 +401,20 @@ public class KartController : MonoBehaviour
                 if ((WantsToDrift || isBraking) && currentSpeed > maxSpeed * MinSpeedPercentToFinishDrift)
                 {
                     IsDrifting = true;
-                    m_DriftTurningPower = turningPower + (Mathf.Sign(turningPower) * DriftAdditionalSteer);
-                    m_CurrentGrip = DriftGrip;
+                    DriftTurningPower = turningPower + (Mathf.Sign(turningPower) * DriftAdditionalSteer);
+                    CurrentGrip = DriftGrip;
                 }
             }
 
             if (IsDrifting)
             {
                 float turnInputAbs = Mathf.Abs(turnInput);
-                if (turnInputAbs < k_NullInput)
-                    m_DriftTurningPower = Mathf.MoveTowards(m_DriftTurningPower, 0.0f, Mathf.Clamp01(DriftDampening * Time.fixedDeltaTime));
+                if (turnInputAbs < NullInput)
+                    DriftTurningPower = Mathf.MoveTowards(DriftTurningPower, 0.0f, Mathf.Clamp01(DriftDampening * Time.fixedDeltaTime));
 
                 // Update the turning power based on input
-                float driftMaxSteerValue = m_FinalStats.Steer + DriftAdditionalSteer;
-                m_DriftTurningPower = Mathf.Clamp(m_DriftTurningPower + (turnInput * Mathf.Clamp01(DriftControl * Time.fixedDeltaTime)), -driftMaxSteerValue, driftMaxSteerValue);
+                float driftMaxSteerValue = FinalStats.Steer + DriftAdditionalSteer;
+                DriftTurningPower = Mathf.Clamp(DriftTurningPower + (turnInput * Mathf.Clamp01(DriftControl * Time.fixedDeltaTime)), -driftMaxSteerValue, driftMaxSteerValue);
 
                 bool facingVelocity = Vector3.Dot(Rigidbody.velocity.normalized, transform.forward * Mathf.Sign(accelInput)) > Mathf.Cos(MinAngleToFinishDrift * Mathf.Deg2Rad);
 
@@ -505,56 +423,57 @@ public class KartController : MonoBehaviour
                     canEndDrift = false;
                 else if (!facingVelocity)
                     canEndDrift = false;
-                else if (turnInputAbs >= k_NullInput && currentSpeed > maxSpeed * MinSpeedPercentToFinishDrift)
+                else if (turnInputAbs >= NullInput && currentSpeed > maxSpeed * MinSpeedPercentToFinishDrift)
                     canEndDrift = false;
 
-                if (canEndDrift || currentSpeed < k_NullSpeed)
+                if (canEndDrift || currentSpeed < NullSpeed)
                 {
                     // No Input, and car aligned with speed direction => Stop the drift
                     IsDrifting = false;
-                    m_CurrentGrip = m_FinalStats.Grip;
+                    CurrentGrip = FinalStats.Grip;
                 }
 
             }
 
             // rotate our velocity based on current steer value
-            Rigidbody.velocity = Quaternion.AngleAxis(turningPower * Mathf.Sign(localVel.z) * velocitySteering * m_CurrentGrip * Time.fixedDeltaTime, transform.up) * Rigidbody.velocity;
+            Rigidbody.velocity = Quaternion.AngleAxis(turningPower * Mathf.Sign(localVel.z) * velocitySteering * CurrentGrip * Time.fixedDeltaTime, transform.up) * Rigidbody.velocity;
         }
         else
         {
-            m_InAir = true;
+            InAir = true;
         }
 
         bool validPosition = false;
         if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out RaycastHit hit, 3.0f, 1 << 9 | 1 << 10 | 1 << 11)) // Layer: ground (9) / Environment(10) / Track (11)
         {
-            Vector3 lerpVector = (m_HasCollision && m_LastCollisionNormal.y > hit.normal.y) ? m_LastCollisionNormal : hit.normal;
-            m_VerticalReference = Vector3.Slerp(m_VerticalReference, lerpVector, Mathf.Clamp01(AirborneReorientationCoefficient * Time.fixedDeltaTime * (GroundPercent > 0.0f ? 10.0f : 1.0f)));    // Blend faster if on ground
+            Vector3 lerpVector = (HasCollision && LastCollisionNormal.y > hit.normal.y) ? LastCollisionNormal : hit.normal;
+            VerticalReference = Vector3.Slerp(VerticalReference, lerpVector, Mathf.Clamp01(AirborneReorientationCoeff * Time.fixedDeltaTime * (GroundPercent > 0.0f ? 10.0f : 1.0f)));    // Blend faster if on ground
         }
         else
         {
-            Vector3 lerpVector = (m_HasCollision && m_LastCollisionNormal.y > 0.0f) ? m_LastCollisionNormal : Vector3.up;
-            m_VerticalReference = Vector3.Slerp(m_VerticalReference, lerpVector, Mathf.Clamp01(AirborneReorientationCoefficient * Time.fixedDeltaTime));
+            Vector3 lerpVector = (HasCollision && LastCollisionNormal.y > 0.0f) ? LastCollisionNormal : Vector3.up;
+            VerticalReference = Vector3.Slerp(VerticalReference, lerpVector, Mathf.Clamp01(AirborneReorientationCoeff * Time.fixedDeltaTime));
         }
 
-        validPosition = GroundPercent > 0.7f && !m_HasCollision && Vector3.Dot(m_VerticalReference, Vector3.up) > 0.9f;
+        validPosition = GroundPercent > 0.7f && !HasCollision && Vector3.Dot(VerticalReference, Vector3.up) > 0.9f;
 
         // Airborne / Half on ground management
         if (GroundPercent < 0.7f)
         {
             Rigidbody.angularVelocity = new Vector3(0.0f, Rigidbody.angularVelocity.y * 0.98f, 0.0f);
-            Vector3 finalOrientationDirection = Vector3.ProjectOnPlane(transform.forward, m_VerticalReference);
+            Vector3 finalOrientationDirection = Vector3.ProjectOnPlane(transform.forward, VerticalReference);
             finalOrientationDirection.Normalize();
             if (finalOrientationDirection.sqrMagnitude > 0.0f)
             {
-                Rigidbody.MoveRotation(Quaternion.Lerp(Rigidbody.rotation, Quaternion.LookRotation(finalOrientationDirection, m_VerticalReference), Mathf.Clamp01(AirborneReorientationCoefficient * Time.fixedDeltaTime)));
+                Rigidbody.MoveRotation(Quaternion.Lerp(Rigidbody.rotation, Quaternion.LookRotation(finalOrientationDirection, VerticalReference), Mathf.Clamp01(AirborneReorientationCoeff * Time.fixedDeltaTime)));
             }
         }
         else if (validPosition)
         {
-            m_LastValidPosition = transform.position;
-            m_LastValidRotation.eulerAngles = new Vector3(0.0f, transform.rotation.y, 0.0f);
+            LastValidPosition = transform.position;
+            LastValidRotation.eulerAngles = new Vector3(0.0f, transform.rotation.y, 0.0f);
         }
 
     }
 }
+

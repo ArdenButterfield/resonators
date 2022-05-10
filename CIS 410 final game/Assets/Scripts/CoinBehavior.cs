@@ -8,7 +8,7 @@ public class CoinBehavior : MonoBehaviour
     // Start is called before the first frame update
     public GameObject[] ChildrenToHide;
     float lastCollisionTime;
-    public float recoveryTime = 5.0f;
+    public float recoveryTime = 1.5f;
     bool active;
 
     void Start()
@@ -21,7 +21,6 @@ public class CoinBehavior : MonoBehaviour
     {
         bool wasActiveBefore = active;
         if (active) {
-            print("setting inactive");
             for (int i = 0; i < ChildrenToHide.Length; i++) {
                 ChildrenToHide[i].SetActive(false);
             }
@@ -34,7 +33,6 @@ public class CoinBehavior : MonoBehaviour
     void Update()
     {
         if ((!active) && (Time.time - lastCollisionTime >= recoveryTime)) {
-            print("setting active");
             for (int i = 0; i < ChildrenToHide.Length; i++) {
                 ChildrenToHide[i].SetActive(true);
             }
