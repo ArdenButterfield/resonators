@@ -14,8 +14,7 @@ using UnityEngine;
 
 public class KartController : MonoBehaviour
 {
-    // Kart base stats
-    [System.Serializable]
+    // Kart base stat struct
     public struct Stats
     {
         // Stat struct declaration
@@ -48,34 +47,6 @@ public class KartController : MonoBehaviour
             };
         }
     }
-
-    // Necessary game objects
-    public Rigidbody Rigidbody { get; private set; }        // references the physical kart
-    public InputData Input { get; private set; }            // initializes the Input struct; KartInput.cs
-    IInput[] Inputs;                                        // list of IInputs where generated inputs are stored
-    public float AirPercent { get; private set; }           // AirPercent/GroundPercent track how many wheels are grounded
-    public float GroundPercent { get; private set; }
-    public bool WantsToDrift { get; private set; } = false; // Indicate drifting status
-    public bool IsDrifting { get; private set; } = false;
-    bool HasCollision = false;
-    bool InAir = false;
-
-    // Stat parameters
-    static private float topSpeed = 50f;
-    static private float acceleration = 1f;
-    static private float reverseSpeed = 15f;
-    static private float reverseAcceleration = 0.7f;
-    static private float accelerationCurve = 4f;
-    static private float braking = 4f;
-    static private float coastingDrag = 10f;
-    static private float grip = 0.9f;
-    static private float steer = 5f;
-    static private float addedGravity = 1f;
-
-    // Boost
-    public NitroManager nitroManager;
-    bool isBoosting = false;
-    float boostTimer = 0.0f;
 
     // Instantiate a Stats struct; 
     private Stats BaseStats = new Stats
@@ -122,6 +93,34 @@ public class KartController : MonoBehaviour
         AddedGravity = 0
     };
 
+    // Necessary game objects
+    public Rigidbody Rigidbody { get; private set; }        // references the physical kart
+    public InputData Input { get; private set; }            // initializes the Input struct; KartInput.cs
+    IInput[] Inputs;                                        // list of IInputs where generated inputs are stored
+    public float AirPercent { get; private set; }           // AirPercent/GroundPercent track how many wheels are grounded
+    public float GroundPercent { get; private set; }
+    public bool WantsToDrift { get; private set; } = false; // Indicate drifting status
+    public bool IsDrifting { get; private set; } = false;
+    bool HasCollision = false;
+    bool InAir = false;
+
+    // Stat parameters
+    static private float topSpeed = 50f;
+    static private float acceleration = 1f;
+    static private float reverseSpeed = 15f;
+    static private float reverseAcceleration = 0.7f;
+    static private float accelerationCurve = 4f;
+    static private float braking = 4f;
+    static private float coastingDrag = 10f;
+    static private float grip = 0.9f;
+    static private float steer = 5f;
+    static private float addedGravity = 1f;
+
+    // Boost
+    public NitroManager nitroManager;
+    bool isBoosting = false;
+    float boostTimer = 0.0f;
+
     // Drift Params
     float DriftGrip = 0.4f;
     float DriftAdditionalSteer = 5.0f;
@@ -154,7 +153,7 @@ public class KartController : MonoBehaviour
 
     // Used to handle rotations and collisions
     Quaternion LastValidRotation;
-    Vector3 LastValidPosition;      // not used
+    Vector3 LastValidPosition;
     Vector3 LastCollisionNormal;
 
     // Constants; useful for some move calculations
@@ -248,11 +247,15 @@ public class KartController : MonoBehaviour
         // Apply findings to necessary variables
         GroundPercent = (float)numGrounded / 4.0f;
         AirPercent = 1 - GroundPercent;
+        if (AirPercent >= 1)
+            InAir = true;
+        else
+            InAir = false;
     }
 
     void AddAirborneGravity()
     {
-        if (AirPercent >= 1)
+        if (InAir)
             Rigidbody.velocity += Physics.gravity * Time.fixedDeltaTime * FinalStats.AddedGravity;
     }
 

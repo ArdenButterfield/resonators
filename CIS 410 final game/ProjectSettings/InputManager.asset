@@ -25,8 +25,8 @@ InputManager:
     m_Name: HorizontalP2
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: left
-    positiveButton: right
+    negativeButton: h
+    positiveButton: k
     altNegativeButton: 
     altPositiveButton: 
     gravity: 3
@@ -58,7 +58,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: up
+    positiveButton: u
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -90,7 +90,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: down
+    positiveButton: j
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
@@ -138,7 +138,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: tab
+    positiveButton: space
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000
