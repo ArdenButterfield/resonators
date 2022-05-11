@@ -1,4 +1,6 @@
 // Script by Arden Butterfield, last modified Apr. 26
+// Modified 5/9/22 by Donny Ebel
+// Modified 5/9/22 by Donny Ebel
 
 using System.Collections;
 using System.Collections.Generic;
@@ -35,7 +37,6 @@ public class NitroManager : MonoBehaviour
             if (coinScript.PickupCoin()) {
                 AddNitro(nitroCoinAmount);
             }
-            
         }
     }
 
@@ -51,10 +52,10 @@ public class NitroManager : MonoBehaviour
         UpdateSlider();
     }
 
-    public bool EnoughNitro(bool isBoosting)
+    public bool EnoughNitro()
     {
         bool enoughFuel = false;
-        if (nitroLevel >= nitroBurnStep && !isBoosting)
+        if (nitroLevel >= nitroBurnStep)
         {
             enoughFuel = true;
             BurnNitro();

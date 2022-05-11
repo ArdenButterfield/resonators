@@ -8,6 +8,7 @@ public struct InputData
     public bool Brake;
     public bool Boost;
     public float TurnInput;
+    public bool Drift;
 }
 
 public interface IInput

@@ -3,14 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Reference Credit: ArcadeKart.cs from Karting Microgame @ learn.unity.com/project/karting-template
-// Adapted by: Donny Ebel (mechanics manager), Arden Butterfield, Oliver Hostick
-
-/*  To Do:
- *  Implement Boost
- *  Implement Drifting
- *  Consider turning suspension wheels into a list and adding a helper function to update suspension
- * 
- */
+// Adapted by: Donny Ebel (mechanics manager)
+// Last updated; 5/10/22 Donny
 
 public class KartController : MonoBehaviour
 {
@@ -63,7 +57,37 @@ public class KartController : MonoBehaviour
         AddedGravity = addedGravity
     };
 
-    // FinalStats is initially a copyp of BaseStats, but boosting changes this.
+    // This is used to clear the WorkingStats struct
+    private Stats ZeroStats = new Stats
+    {
+        TopSpeed = 0f,
+        Acceleration = 0f,
+        ReverseSpeed = 0f,
+        ReverseAcceleration = 0f,
+        AccelerationCurve = 0f,
+        Braking = 0f,
+        CoastingDrag = 0f,
+        Grip = 0f,
+        Steer = 0f,
+        AddedGravity = 0f
+    };
+
+    // Used to add stats based on kart's input state.
+    private Stats WorkingStats = new Stats
+    {
+        TopSpeed = 0f,
+        Acceleration = 0f,
+        ReverseSpeed = 0f,
+        ReverseAcceleration = 0f,
+        AccelerationCurve = 0f,
+        Braking = 0f,
+        CoastingDrag = 0f,
+        Grip = 0f,
+        Steer = 0f,
+        AddedGravity = 0f
+    };
+
+    // FinalStats is initially a copy of BaseStats, but boosting/drifting changes this.
     private Stats FinalStats = new Stats
     {
         TopSpeed = topSpeed,
@@ -78,31 +102,30 @@ public class KartController : MonoBehaviour
         AddedGravity = addedGravity
     };
 
-    // This struct is for applying a boost. This is added directly to BaseStats
-    private Stats BoostedStats = new Stats
+    // The boost struct!
+    private Stats BoostingStats = new Stats
     {
-        TopSpeed = 30f,
-        Acceleration = 10f,
-        ReverseSpeed = 0,
-        ReverseAcceleration = 0,
-        AccelerationCurve = 0,
-        Braking = 0,
-        CoastingDrag = 0,
-        Grip = 0,
-        Steer = 0,
-        AddedGravity = 0
+        TopSpeed = 40f,
+        Acceleration = 200f
+    };
+
+    // The drift struct!
+    private Stats DriftingStats = new Stats
+    {
+        Acceleration = -0.5f,
+        Grip = -0.7f,
+        Steer = 1.5f
     };
 
     // Necessary game objects
-    public Rigidbody Rigidbody { get; private set; }        // references the physical kart
-    public InputData Input { get; private set; }            // initializes the Input struct; KartInput.cs
-    IInput[] Inputs;                                        // list of IInputs where generated inputs are stored
-    public float AirPercent { get; private set; }           // AirPercent/GroundPercent track how many wheels are grounded
+    public Rigidbody Rigidbody { get; private set; }
+    public InputData Input { get; private set; }            // Initializes the Input object from KartInput.cs
+    IInput[] Inputs;                                        // List of Inputs where generated inputs are stored
+    public float AirPercent { get; private set; }           // How many wheels are considered grounded.
     public float GroundPercent { get; private set; }
-    public bool WantsToDrift { get; private set; } = false; // Indicate drifting status
-    public bool IsDrifting { get; private set; } = false;
     bool HasCollision = false;
     bool InAir = false;
+
 
     // Stat parameters
     static private float topSpeed = 50f;
@@ -111,29 +134,21 @@ public class KartController : MonoBehaviour
     static private float reverseAcceleration = 0.7f;
     static private float accelerationCurve = 4f;
     static private float braking = 4f;
-    static private float coastingDrag = 10f;
-    static private float grip = 0.9f;
-    static private float steer = 5f;
-    static private float addedGravity = 1f;
+    static private float coastingDrag = 20f;
+    static private float grip = 1f;
+    static private float steer = 3f;
+    static private float addedGravity = 4f;
 
     // Boost
     public NitroManager nitroManager;
     bool isBoosting = false;
     float boostTimer = 0.0f;
 
-    // Drift Params
-    float DriftGrip = 0.4f;
-    float DriftAdditionalSteer = 5.0f;
-    float MinAngleToFinishDrift = 10.0f;
-    float MinSpeedPercentToFinishDrift = 10.0f;
-    float DriftControl = 10.0f;
-    float DriftDampening = 10.0f;
-    float CurrentGrip = 1.0f;
-    float DriftTurningPower = 0.0f;
-    float PreviousGroundPercent = 1.0f;
+    // Drifting
+    bool isDrifting = false;
 
     // Suspension Params and Wheel Objects
-    public Transform CenterOfMass;                      // attatch kart collider parent obj here in Inspector
+    public Transform CenterOfMass;               // attatch kart collider parent obj here in Inspector
     float AirborneReorientationCoeff = 3.0f;     // how quickly the kart rights itself while airborne
     float SuspensionHeight = 0.2f;
     float SuspensionSpring = 20000.0f;
@@ -165,34 +180,28 @@ public class KartController : MonoBehaviour
     // Get necessary components and update state
     void Awake()
     {
-        // Hook up rigidbody, raw inputs, and assigns current grip (C# complained when attempted during init)
+        // Get rigidbody and raw inputs
         Rigidbody = GetComponent<Rigidbody>();
         Inputs = GetComponents<IInput>();
-        CurrentGrip = FinalStats.Grip;
-
-        // Update suspension
-        UpdateSuspensionParams(FrontLeftWheel);
-        UpdateSuspensionParams(FrontRightWheel);
-        UpdateSuspensionParams(RearLeftWheel);
-        UpdateSuspensionParams(RearRightWheel);
     }
 
     void FixedUpdate()
     {
         // Update suspension params and get new centerOfMass
         Rigidbody.centerOfMass = transform.InverseTransformPoint(CenterOfMass.position);
-        UpdateSuspensionParams(FrontLeftWheel);
-        UpdateSuspensionParams(FrontRightWheel);
-        UpdateSuspensionParams(RearLeftWheel);
-        UpdateSuspensionParams(RearRightWheel);
+        UpdateAllSuspensionParams();
 
         // Generate inputs and check if we're fully airborne for this frame!
         GetInputs();
-        GetGroundedPercent();       // Populates GroundPercent/AirPercent vars
-        AddAirborneGravity();       // If airborne, add a little extra gravity
 
-        // Move!
-        CheckBoost();
+        // Check to see if we're on the ground; if not, add a little extra gravity.
+        GetGroundedPercent();
+        AddAirborneGravity();
+
+        // Update stats based on boosting or drifting
+        FinalStats = BaseStats + AddBoost() + AddDrift();
+
+        // Finally, move!
         MoveVehicle(Input.Accelerate, Input.Brake, Input.TurnInput);
 
         // Insert animation stuff here
@@ -222,12 +231,8 @@ public class KartController : MonoBehaviour
     void GetInputs()
     {
         Input = new InputData();
-        WantsToDrift = false;
         for (int i = 0; i < Inputs.Length; i++)
-        {
             Input = Inputs[i].GenerateInput();
-            WantsToDrift = Input.Brake && Vector3.Dot(Rigidbody.velocity, transform.forward) > 0.0f;
-        }
     }
 
     void GetGroundedPercent()
@@ -245,7 +250,7 @@ public class KartController : MonoBehaviour
             numGrounded++;
 
         // Apply findings to necessary variables
-        GroundPercent = (float)numGrounded / 4.0f;
+        GroundPercent = (float) numGrounded / 4.0f;
         AirPercent = 1 - GroundPercent;
         if (AirPercent >= 1)
             InAir = true;
@@ -259,7 +264,7 @@ public class KartController : MonoBehaviour
             Rigidbody.velocity += Physics.gravity * Time.fixedDeltaTime * FinalStats.AddedGravity;
     }
 
-    void UpdateSuspensionParams(WheelCollider wheel)
+    private void UpdateSuspensionParams(WheelCollider wheel)
     {
         wheel.suspensionDistance = SuspensionHeight;
         wheel.center = new Vector3(0.0f, WheelsPositionVerticalOffset, 0.0f);
@@ -269,28 +274,63 @@ public class KartController : MonoBehaviour
         wheel.suspensionSpring = spring;
     }
 
-    void CheckBoost()
+    private void UpdateAllSuspensionParams()
     {
-        // If user inputs boost AND there's enough nitro AND the timer was reset...
-        if (Input.Boost && nitroManager.EnoughNitro(isBoosting))
-        {
-            // Set boosting to true, update stats
-            isBoosting = true;
-            FinalStats = BaseStats + BoostedStats;
-        }
-        // Otherwise, if boosting, update the timer.
-        else if (isBoosting)
-            boostTimer += Time.fixedDeltaTime;
-        
-        if (boostTimer > 1.5f)
-        {
-            isBoosting = false;
-            boostTimer = 0.0f;
-            FinalStats = BaseStats;
-        }
+        UpdateSuspensionParams(FrontLeftWheel);
+        UpdateSuspensionParams(FrontRightWheel);
+        UpdateSuspensionParams(RearLeftWheel);
+        UpdateSuspensionParams(RearRightWheel);
     }
 
-    void MoveVehicle(bool accelerate, bool brake, float turnInput)
+    private Stats AddBoost()
+    {
+        // Reset working stats
+        WorkingStats = ZeroStats;
+
+        // If not in the air or currently boosting, initiate boost if input and there's enough nitro.
+        if (!isBoosting && !InAir && Input.Boost && nitroManager.EnoughNitro())
+            isBoosting = true;
+
+        // If we are boosting, set return value to boosting stats and update timer.
+        if (isBoosting)
+        {
+            WorkingStats = BoostingStats;
+            boostTimer += Time.fixedDeltaTime;
+
+            // If the timer expires, stop boost and reset timer.
+            if (boostTimer > 1.0f)
+            {
+                isBoosting = false;
+                boostTimer = 0.0f;
+            }
+        }
+
+        return WorkingStats;
+    }
+
+    private Stats AddDrift()
+    {
+        // Reset working stats
+        WorkingStats = ZeroStats;
+
+        // If not in the air or currently drifting, initiate drift.
+        if (!isDrifting && !InAir && Input.Drift)
+            isDrifting = true;
+
+        // If we're drifting, set return value to drifting stats.
+        if (isDrifting)
+        {
+            WorkingStats = DriftingStats;
+
+            // Once drift input is no longer received, stop drift.
+            if (!Input.Drift)
+                isDrifting = false;
+        }
+
+        return WorkingStats;
+    }
+
+    private void MoveVehicle(bool accelerate, bool brake, float turnInput)
     {
         // DETERMINE ACCELERATION
         // Get current speed and velocity; set acceleration curve coefficient
@@ -321,8 +361,8 @@ public class KartController : MonoBehaviour
 
 
         // DETERMINE VELOCITY
-        // If we're drifting use drift turning; otherwise steer based on input
-        float turningPower = IsDrifting ? DriftTurningPower : turnInput * FinalStats.Steer;
+        // Calculate turning power
+        float turningPower = turnInput * FinalStats.Steer;
 
         // Multiply quaternion and the foward vector to yield a "toward" vector.
         Quaternion turnAngle = Quaternion.AngleAxis(turningPower, transform.up);
@@ -337,15 +377,13 @@ public class KartController : MonoBehaviour
         // If we're over max speed, don't go any faster!
         bool wasOverMaxSpeed = currentSpeed >= maxSpeed;
         if (wasOverMaxSpeed && !isBraking && !isBoosting)
-        {
             movement *= 0.0f;
-        }
 
         // Create temp vector to store updated calculations at this point.
         Vector3 newVelocity = Rigidbody.velocity + movement * Time.fixedDeltaTime;
         newVelocity.y = Rigidbody.velocity.y;
 
-        //  Limit new velocity based on max speed.
+        // Limit new velocity based on max speed.
         if (GroundPercent > 0.0f && !wasOverMaxSpeed)
             newVelocity = Vector3.ClampMagnitude(newVelocity, maxSpeed);
 
@@ -358,14 +396,9 @@ public class KartController : MonoBehaviour
         Rigidbody.velocity = newVelocity;
 
 
-        // DRIFTING
-        if (GroundPercent > 0.0f)
+        // STEERING
+        if (!InAir)
         {
-            if (InAir)
-            {
-                InAir = false;
-            }
-
             // manual angular velocity coefficient
             float angularVelocitySteering = 0.4f;
             float angularVelocitySmoothSpeed = 20f;
@@ -386,66 +419,12 @@ public class KartController : MonoBehaviour
             // manual velocity steering coefficient
             float velocitySteering = 25f;
 
-            // If the karts lands with a forward not in the velocity direction, we start the drift
-            if (GroundPercent >= 0.0f && PreviousGroundPercent < 0.1f)
-            {
-                Vector3 flattenVelocity = Vector3.ProjectOnPlane(Rigidbody.velocity, VerticalReference).normalized;
-                if (Vector3.Dot(flattenVelocity, transform.forward * Mathf.Sign(accelInput)) < Mathf.Cos(MinAngleToFinishDrift * Mathf.Deg2Rad))
-                {
-                    IsDrifting = true;
-                    CurrentGrip = DriftGrip;
-                    DriftTurningPower = 0.0f;
-                }
-            }
-
-            // Drift Management
-            if (!IsDrifting)
-            {
-                if ((WantsToDrift || isBraking) && currentSpeed > maxSpeed * MinSpeedPercentToFinishDrift)
-                {
-                    IsDrifting = true;
-                    DriftTurningPower = turningPower + (Mathf.Sign(turningPower) * DriftAdditionalSteer);
-                    CurrentGrip = DriftGrip;
-                }
-            }
-
-            if (IsDrifting)
-            {
-                float turnInputAbs = Mathf.Abs(turnInput);
-                if (turnInputAbs < NullInput)
-                    DriftTurningPower = Mathf.MoveTowards(DriftTurningPower, 0.0f, Mathf.Clamp01(DriftDampening * Time.fixedDeltaTime));
-
-                // Update the turning power based on input
-                float driftMaxSteerValue = FinalStats.Steer + DriftAdditionalSteer;
-                DriftTurningPower = Mathf.Clamp(DriftTurningPower + (turnInput * Mathf.Clamp01(DriftControl * Time.fixedDeltaTime)), -driftMaxSteerValue, driftMaxSteerValue);
-
-                bool facingVelocity = Vector3.Dot(Rigidbody.velocity.normalized, transform.forward * Mathf.Sign(accelInput)) > Mathf.Cos(MinAngleToFinishDrift * Mathf.Deg2Rad);
-
-                bool canEndDrift = true;
-                if (isBraking)
-                    canEndDrift = false;
-                else if (!facingVelocity)
-                    canEndDrift = false;
-                else if (turnInputAbs >= NullInput && currentSpeed > maxSpeed * MinSpeedPercentToFinishDrift)
-                    canEndDrift = false;
-
-                if (canEndDrift || currentSpeed < NullSpeed)
-                {
-                    // No Input, and car aligned with speed direction => Stop the drift
-                    IsDrifting = false;
-                    CurrentGrip = FinalStats.Grip;
-                }
-
-            }
-
             // rotate our velocity based on current steer value
-            Rigidbody.velocity = Quaternion.AngleAxis(turningPower * Mathf.Sign(localVel.z) * velocitySteering * CurrentGrip * Time.fixedDeltaTime, transform.up) * Rigidbody.velocity;
-        }
-        else
-        {
-            InAir = true;
+            Rigidbody.velocity = Quaternion.AngleAxis(turningPower * Mathf.Sign(localVel.z) * velocitySteering * FinalStats.Grip * Time.fixedDeltaTime, transform.up) * Rigidbody.velocity;
         }
 
+
+        // STABILIZING
         bool validPosition = false;
         if (Physics.Raycast(transform.position + (transform.up * 0.1f), -transform.up, out RaycastHit hit, 3.0f, 1 << 9 | 1 << 10 | 1 << 11)) // Layer: ground (9) / Environment(10) / Track (11)
         {

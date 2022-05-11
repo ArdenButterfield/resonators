@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Make sure coin doesn't spawn if something's in its space!
+
 public class CoinBehavior : MonoBehaviour
 {
-
-    // Start is called before the first frame update
     public GameObject[] ChildrenToHide;
     float lastCollisionTime;
     public float recoveryTime = 1.5f;
