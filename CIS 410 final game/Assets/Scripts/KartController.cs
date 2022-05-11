@@ -288,7 +288,7 @@ public class KartController : MonoBehaviour
         WorkingStats = ZeroStats;
 
         // If not in the air or currently boosting, initiate boost if input and there's enough nitro.
-        if (!isBoosting && !InAir && Input.Boost && nitroManager.EnoughNitro())
+        if (!isBoosting && !InAir && Input.Accelerate && Input.Boost && nitroManager.EnoughNitro())
             isBoosting = true;
 
         // If we are boosting, set return value to boosting stats and update timer.

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2100,7 +2100,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635678097}
   m_LocalRotation: {x: -0.06195635, y: -0.23122421, z: 0.25129414, w: 0.93784225}
-  m_LocalPosition: {x: 257.8, y: 14.9, z: 186}
+  m_LocalPosition: {x: 258, y: 15.1, z: 185.5}
   m_LocalScale: {x: 6.2199993, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2224,7 +2224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5406878657898491627, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_Name
-      value: Coin (1)
+      value: Coin 22
       objectReference: {fileID: 0}
     - target: {fileID: 8338131140244646888, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_IsTrigger
@@ -2797,7 +2797,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 817304514}
   m_LocalRotation: {x: -0.061956365, y: 0.23122421, z: 0.2512942, w: -0.93784225}
-  m_LocalPosition: {x: 359.8, y: 14.8, z: 239.6}
+  m_LocalPosition: {x: 360.5, y: 15, z: 239.3}
   m_LocalScale: {x: 6.2200003, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4347,7 +4347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5406878657898491627, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_Name
-      value: Coin 13 (1)
+      value: Coin 21
       objectReference: {fileID: 0}
     - target: {fileID: 8338131140244646888, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_IsTrigger
@@ -5353,7 +5353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5406878657898491627, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_Name
-      value: Coin 5 (1)
+      value: Coin 23
       objectReference: {fileID: 0}
     - target: {fileID: 8338131140244646888, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_IsTrigger
@@ -7839,7 +7839,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 442754296504014734, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 47.18
+      value: 47.6
       objectReference: {fileID: 0}
     - target: {fileID: 442754296504014734, guid: 81aa19ec1f07b4949837564d58760ffa, type: 3}
       propertyPath: m_LocalPosition.z
