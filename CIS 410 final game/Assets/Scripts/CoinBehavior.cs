@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Make sure coin doesn't spawn if something's in its space!
+// TODO: Make sure coin doesn't spawn if something's in its space!
 
 public class CoinBehavior : MonoBehaviour
 {

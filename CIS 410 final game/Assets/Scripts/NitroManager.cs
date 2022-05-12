@@ -20,6 +20,10 @@ public class NitroManager : MonoBehaviour
     private float startingNitroAmount = 0f;
     private float nitroCoinAmount = 2.0f;
 
+
+    public SoundManager soundManager;
+    public int carNumber;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +32,7 @@ public class NitroManager : MonoBehaviour
         UpdateSlider();
     }
 
-    private void OnTriggerEnter(Collider other) 
+    void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.CompareTag("Nitro")) 
         {
@@ -36,12 +40,12 @@ public class NitroManager : MonoBehaviour
             CoinBehavior coinScript = other.gameObject.GetComponent<CoinBehavior>();
             if (coinScript.PickupCoin()) {
                 AddNitro(nitroCoinAmount);
+                soundManager.playPickup(carNumber);
             }
         }
     }
 
-    // Called by the car when the car picks up coins. I guess this is
-    // the observer pattern or something ;-)
+    // Called by the car when the car picks up coins.
     void AddNitro(float amount)
     {
         nitroLevel += amount;
