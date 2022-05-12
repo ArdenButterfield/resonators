@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource[] musicSource;
+    public AudioSource musicSource;
+    public AudioSource musicKickSource;
     public AudioSource car1FXSource;
     public AudioSource car2FXSource;
 
     public AudioClip[] coinPickups;
     public AudioClip musicLoop;
+    public AudioClip musicKick;
     public AudioClip[] boostSounds;
     public AudioClip[] driftSounds;
     public AudioClip[] crashSounds;
@@ -17,8 +19,12 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        print("Sound at start");
-        car1FXSource.PlayOneShot(coinPickups[0], 0.7f);
+        musicSource.loop = true;
+        musicKickSource.loop = true;
+        musicSource.clip = musicLoop;
+        musicKickSource.clip = musicKick;
+        musicSource.Play();
+        musicKickSource.Play();
     }
 
     // Update is called once per frame

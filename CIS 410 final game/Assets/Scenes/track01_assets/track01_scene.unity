@@ -1328,7 +1328,7 @@ AudioSource:
   m_GameObject: {fileID: 282326823}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4284769606911831362, guid: 322df87efdc9b440fabd90ac7111c6ba, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -3530,7 +3530,7 @@ AudioSource:
   m_GameObject: {fileID: 901979392}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3905376991342161284, guid: 322df87efdc9b440fabd90ac7111c6ba, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -4375,6 +4375,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8301c26097996ce4fa26f5e5847d888a, type: 3}
+--- !u!1 &1104908234
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1104908235}
+  m_Layer: 0
+  m_Name: mixer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1104908235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1104908234}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 10.650002, z: 377.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1113678347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6142,7 +6173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6dc648f9dd474842b2bfc407e83a87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSource: []
+  musicSource: {fileID: 282326825}
+  musicKickSource: {fileID: 1698715322}
   car1FXSource: {fileID: 901979394}
   car2FXSource: {fileID: 229049765}
   coinPickups:
@@ -6153,7 +6185,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ddbff9376aa1e4963abb55b6b8fd693a, type: 3}
   - {fileID: 8300000, guid: 49edfa00dbba94a0aa995ea64bb22f1c, type: 3}
   - {fileID: 8300000, guid: 582680d4f9dfc454f9bfc56bcfee40dd, type: 3}
-  musicLoop: {fileID: 0}
+  musicLoop: {fileID: 8300000, guid: a4d9efa7e2c4b4f7cb84b437ae7e905b, type: 3}
+  musicKick: {fileID: 8300000, guid: 8dd5e6858472f49819a0bb229e1a5bc8, type: 3}
   boostSounds:
   - {fileID: 8300000, guid: b990fe2d95ac043839c73a16fc8e944f, type: 3}
   - {fileID: 8300000, guid: ac7064d1419c7420fafeacfb3c8e4720, type: 3}
@@ -6684,7 +6717,7 @@ AudioSource:
   m_GameObject: {fileID: 1698715320}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -585868415909317748, guid: 322df87efdc9b440fabd90ac7111c6ba, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
