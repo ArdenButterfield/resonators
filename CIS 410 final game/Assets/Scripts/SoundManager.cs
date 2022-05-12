@@ -27,6 +27,7 @@ public class SoundManager : MonoBehaviour
         
     }
 
+    // Called from Nitro Manager
     public void playPickup(int CarNumber) {
         AudioSource playSource;
         if (CarNumber == 1) {
@@ -39,5 +40,17 @@ public class SoundManager : MonoBehaviour
         int index = Random.Range(0,coinPickups.Length) % coinPickups.Length;
 
         playSource.PlayOneShot(coinPickups[index]);
+    }
+
+    // Called from Nitro Manager
+    public void playBoost(int CarNumber) {
+        AudioSource playSource;
+        if (CarNumber == 1) {
+            playSource = car1FXSource;
+        } else {
+            playSource = car2FXSource;
+        }
+        int index = Random.Range(0, boostSounds.Length) % boostSounds.Length;
+        playSource.PlayOneShot(boostSounds[index]);
     }
 }

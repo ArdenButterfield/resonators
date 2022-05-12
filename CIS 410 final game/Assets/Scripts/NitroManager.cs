@@ -73,6 +73,8 @@ public class NitroManager : MonoBehaviour
         nitroLevel -= nitroBurnStep;
 
         UpdateSlider();
+        soundManager.playBoost(carNumber);
+
     }
 
     void UpdateSlider()
