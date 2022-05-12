@@ -6154,7 +6154,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 49edfa00dbba94a0aa995ea64bb22f1c, type: 3}
   - {fileID: 8300000, guid: 582680d4f9dfc454f9bfc56bcfee40dd, type: 3}
   musicLoop: {fileID: 0}
-  boostSounds: []
+  boostSounds:
+  - {fileID: 8300000, guid: b990fe2d95ac043839c73a16fc8e944f, type: 3}
+  - {fileID: 8300000, guid: ac7064d1419c7420fafeacfb3c8e4720, type: 3}
   driftSounds: []
   crashSounds: []
 --- !u!1001 &1588281346
