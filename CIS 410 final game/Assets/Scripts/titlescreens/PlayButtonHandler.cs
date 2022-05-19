@@ -18,6 +18,7 @@ public class PlayButtonHandler : MonoBehaviour
         PlayerPrefs.Save();
 
     }
+    
     public void LoadScene(string SceneName)
     {
         // Draws on this tutorial: https://www.youtube.com/watch?v=05OfmBIf5os
