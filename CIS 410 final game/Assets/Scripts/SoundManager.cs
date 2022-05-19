@@ -59,4 +59,15 @@ public class SoundManager : MonoBehaviour
         int index = Random.Range(0, boostSounds.Length) % boostSounds.Length;
         playSource.PlayOneShot(boostSounds[index]);
     }
+
+    public void playCrash(int CarNumber, float volume) {
+        AudioSource playSource;
+        if (CarNumber == 1) {
+            playSource = car1FXSource;
+        } else {
+            playSource = car2FXSource;
+        }
+        int index = Random.Range(0, crashSounds.Length) % crashSounds.Length;
+        playSource.PlayOneShot(crashSounds[index], volume);
+    }
 }

@@ -5429,6 +5429,18 @@ PrefabInstance:
       propertyPath: forwardKey
       value: 273
       objectReference: {fileID: 0}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1572132662}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: carNumber
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: crashThreshold
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 4466888475822015697, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6953,7 +6965,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b990fe2d95ac043839c73a16fc8e944f, type: 3}
   - {fileID: 8300000, guid: ac7064d1419c7420fafeacfb3c8e4720, type: 3}
   driftSounds: []
-  crashSounds: []
+  crashSounds:
+  - {fileID: 8300000, guid: e971e50d441fa4548917b2ffb7fbed21, type: 3}
+  - {fileID: 8300000, guid: 29351d969c231477a936cd7e50d77c69, type: 3}
+  - {fileID: 8300000, guid: 016e8686c31ec40e1bc7559aaa075638, type: 3}
 --- !u!1001 &1588281346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8158,6 +8173,18 @@ PrefabInstance:
     - target: {fileID: 4085156392733271720, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: driftKey
       value: 304
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1572132662}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: carNumber
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: crashThreshold
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 5135156708204615449, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: m_UseGravity

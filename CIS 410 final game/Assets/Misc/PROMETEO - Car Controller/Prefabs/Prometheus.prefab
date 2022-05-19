@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 5920726960829728000}
   - component: {fileID: 5135156708204615449}
   - component: {fileID: 7501088113771533049}
+  - component: {fileID: 4220130668097024686}
   m_Layer: 0
   m_Name: Prometheus
   m_TagString: Untagged
@@ -114,9 +115,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NitroMeter: {fileID: 0}
-  nitroBurnStep: 0.01
-  startingNitroAmount: 0
-  nitroCoinAmount: 1
+  soundManager: {fileID: 0}
+  carNumber: 0
+--- !u!114 &4220130668097024686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642287924342879162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3b0a718eee9455fa1b5c445115f69f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &934883528070179459
 GameObject:
   m_ObjectHideFlags: 0
