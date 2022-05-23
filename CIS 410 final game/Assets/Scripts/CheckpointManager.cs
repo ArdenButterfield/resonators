@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
-    public int required_laps = 3;
+    public int required_laps = 2;
     public int num_checkpoints_on_track = 5;
 
     // Car lap information. A lap only counts if all checkpoints exist in that car's list
     private List<int> laps;
-    private List<List<int>> clearedCheckpoints;
+    private List<int> lastClearedCheckpoint;
 
     public GameObject WinPanel;
     public TextMeshProUGUI WinPanelText;
@@ -20,28 +20,47 @@ public class CheckpointManager : MonoBehaviour
     void Start()
     {
         Debug.Log("In CheckpointManager Start()");
-        laps[1] = 1;
-        laps[2] = 1;
+        laps = new List<int>() {0,0};
+        lastClearedCheckpoint = new List<int>() {0,0};
+        WinPanel.SetActive(false);
     }
 
     public void UpdateCheckpoints(int carnum, int checkpointnum)
     {
-        // Add checkpoints to the car's as race continues.
-        clearedCheckpoints[carnum].Add(checkpointnum);
+        int nextExpectedCheckpoint = lastClearedCheckpoint[carnum - 1] + 1;
+        nextExpectedCheckpoint %= num_checkpoints_on_track;
 
+        if (checkpointnum == nextExpectedCheckpoint) {
+            print("Checkpoint cleared");
+            lastClearedCheckpoint[carnum - 1] = checkpointnum;
+            if (checkpointnum == 0) {
+                print("lap completed");
+                laps[carnum-1] += 1;
+                if (laps[carnum-1] == required_laps) {
+                    EndRace(carnum);
+                }
+            }
+        }
+        /*
         // If the car crosses the finish line...
         if (checkpointnum == 0)
         {
             // ...end race if someone won!
-            if (laps[carnum] == required_laps)
+            if (laps[carnum-1] == required_laps)
+            {
                 EndRace(carnum);
+            }
 
             // Otherwise, update lap if all checkpoints were triggered.
             else if (LapWasCompleted(carnum))
-                    laps[carnum]++; Debug.Log("Car " + carnum + "on lap " + laps[carnum]);
+            {
+                laps[carnum-1]++; 
+                Debug.Log("Car " + carnum + "on lap " + laps[carnum-1]);
+            }
         }
+        */
     }
-
+    /*
     private bool LapWasCompleted(int carnum)
     {
         Debug.Log("In LapWasCompleted()");
@@ -60,7 +79,7 @@ public class CheckpointManager : MonoBehaviour
 
         return tickLap;
     }
-
+    */
     // Ends the race; declare the winner
     private void EndRace(int winner)
     {
