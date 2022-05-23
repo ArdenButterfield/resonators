@@ -137,7 +137,7 @@ public class KartController : MonoBehaviour
     static private float coastingDrag = 20f;
     static private float grip = 1f;
     static private float steer = 3f;
-    static private float addedGravity = 4f;
+    static private float addedGravity = 2f;
 
     // Boost
     public NitroManager nitroManager;
@@ -149,7 +149,7 @@ public class KartController : MonoBehaviour
 
     // Suspension Params and Wheel Objects
     public Transform CenterOfMass;               // attatch kart collider parent obj here in Inspector
-    float AirborneReorientationCoeff = 3.0f;     // how quickly the kart rights itself while airborne
+    float AirborneReorientationCoeff = 0.5f;     // how quickly the kart rights itself while airborne
     float SuspensionHeight = 0.2f;
     float SuspensionSpring = 20000.0f;
     float SuspensionDamp = 500.0f;
@@ -321,13 +321,27 @@ public class KartController : MonoBehaviour
         if (isDrifting)
         {
             WorkingStats = DriftingStats;
+            StartDriftEffects();
 
             // Once drift input is no longer received, stop drift.
             if (!Input.Drift)
+            {
                 isDrifting = false;
+                StopDriftEffects();
+            }
         }
 
         return WorkingStats;
+    }
+
+    private void StartDriftEffects()
+    {
+        
+    }
+
+    private void StopDriftEffects()
+    {
+
     }
 
     private void MoveVehicle(bool accelerate, bool brake, float turnInput)
