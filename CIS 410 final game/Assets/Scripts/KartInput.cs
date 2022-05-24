@@ -9,6 +9,7 @@ public struct InputData
     public bool Boost;
     public float TurnInput;
     public bool Drift;
+    public bool Respawn;
 }
 
 public interface IInput

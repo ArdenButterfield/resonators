@@ -9,6 +9,7 @@ public class KartMovementKeysP1 : BaseInput
     public string BrakeButtonName = "BrakeP1";
     public string BoostButtonName = "BoostP1";
     public string DriftButtonName = "DriftP1";
+    public string RespawnButtonName = "RespawnP1";
 
     public override InputData GenerateInput() {
         return new InputData
@@ -17,7 +18,8 @@ public class KartMovementKeysP1 : BaseInput
             Brake = Input.GetButton(BrakeButtonName),
             Boost = Input.GetButton(BoostButtonName),
             TurnInput = Input.GetAxis(TurnInputName),
-            Drift = Input.GetButton(DriftButtonName)
+            Drift = Input.GetButton(DriftButtonName),
+            Respawn = Input.GetButton(RespawnButtonName)
         };
     }
 }

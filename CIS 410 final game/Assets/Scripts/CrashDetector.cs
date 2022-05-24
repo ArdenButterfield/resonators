@@ -57,7 +57,7 @@ public class CrashDetector : MonoBehaviour
         if (CrashConditionsMet(velocity, acceleration)) {
             lastCrash = Time.time;
             float volume = acceleration.sqrMagnitude;
-            print(volume);
+            //print(volume);
             if (volume > 1f) {
                 volume = 1f;
             }

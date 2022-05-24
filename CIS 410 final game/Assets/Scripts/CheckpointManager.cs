@@ -9,9 +9,13 @@ public class CheckpointManager : MonoBehaviour
     public int required_laps = 2;
     public int num_checkpoints_on_track = 5;
 
-    // Car lap information. A lap only counts if all checkpoints exist in that car's list
+    // Car lap information.
     private List<int> laps;
     private List<int> lastClearedCheckpoint;
+
+    // Keeps a list of all checkpoints and updates respawnPoint with the most recently cleared valid checkpoint
+    public Transform respawnPoint;
+    public List<Transform> respawnPoints = new List<Transform>();
 
     public GameObject WinPanel;
     public TextMeshProUGUI WinPanelText;
@@ -19,7 +23,6 @@ public class CheckpointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Debug.Log("In CheckpointManager Start()");
         laps = new List<int>() {0,0};
         lastClearedCheckpoint = new List<int>() {0,0};
         WinPanel.SetActive(false);
@@ -30,56 +33,21 @@ public class CheckpointManager : MonoBehaviour
         int nextExpectedCheckpoint = lastClearedCheckpoint[carnum - 1] + 1;
         nextExpectedCheckpoint %= num_checkpoints_on_track;
 
-        if (checkpointnum == nextExpectedCheckpoint) {
-            //print("Checkpoint cleared");
-            lastClearedCheckpoint[carnum - 1] = checkpointnum;
-            if (checkpointnum == 0) {
-                //print("lap completed");
-                laps[carnum-1] += 1;
-                if (laps[carnum-1] == required_laps) {
-                    EndRace(carnum);
-                }
-            }
-        }
-        /*
-        // If the car crosses the finish line...
-        if (checkpointnum == 0)
+        if (checkpointnum == nextExpectedCheckpoint)
         {
-            // ...end race if someone won!
-            if (laps[carnum-1] == required_laps)
-            {
-                EndRace(carnum);
-            }
+            lastClearedCheckpoint[carnum - 1] = checkpointnum;
+            respawnPoint = respawnPoints[checkpointnum];
 
-            // Otherwise, update lap if all checkpoints were triggered.
-            else if (LapWasCompleted(carnum))
+            if (checkpointnum == 0)
             {
-                laps[carnum-1]++; 
-                Debug.Log("Car " + carnum + "on lap " + laps[carnum-1]);
+                if (laps[carnum - 1] == required_laps)
+                    EndRace(carnum);
+                else
+                    laps[carnum - 1] += 1;
             }
         }
-        */
     }
-    /*
-    private bool LapWasCompleted(int carnum)
-    {
-        Debug.Log("In LapWasCompleted()");
-        // Assume failure
-        bool tickLap = false;
-        int checkpointCount = 0;
 
-        // Increment counter if checkpoint was in the list
-        for (int i = 1; i <= num_checkpoints_on_track; i++)
-            if (clearedCheckpoints[carnum].Contains(i))
-                checkpointCount++;
-
-        // If all checkpoints cleared, update return bool
-        if (checkpointCount == num_checkpoints_on_track)
-            tickLap = true;
-
-        return tickLap;
-    }
-    */
     // Ends the race; declare the winner
     private void EndRace(int winner)
     {

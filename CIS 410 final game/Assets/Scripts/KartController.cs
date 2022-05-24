@@ -118,14 +118,18 @@ public class KartController : MonoBehaviour
     };
 
     // Necessary game objects
+    //public GameObject playerTransform { get; private set; }
+    public CheckpointManager checkpointManager;
+    //public Transform respawnPoint;
     public Rigidbody Rigidbody { get; private set; }
     public InputData Input { get; private set; }            // Initializes the Input object from KartInput.cs
     IInput[] Inputs;                                        // List of Inputs where generated inputs are stored
     public float AirPercent { get; private set; }           // How many wheels are considered grounded.
     public float GroundPercent { get; private set; }
-    bool HasCollision = false;
-    bool InAir = false;
-
+    private bool HasCollision = false;
+    private bool InAir = false;
+    private float respawnTimer = 0.0f;
+    private bool IsRespawning = false;
 
     // Stat parameters
     static private float topSpeed = 50f;
@@ -194,21 +198,19 @@ public class KartController : MonoBehaviour
         Rigidbody.centerOfMass = transform.InverseTransformPoint(CenterOfMass.position);
         UpdateAllSuspensionParams();
 
-        // Generate inputs and check if we're fully airborne for this frame!
+        // Generate inputs, grounded info and add a little gravity if in the air.
         GetInputs();
-
-        // Check to see if we're on the ground; if not, add a little extra gravity.
         GetGroundedPercent();
         AddAirborneGravity();
 
         // Update stats based on boosting or drifting
         FinalStats = BaseStats + AddBoost() + AddDrift();
 
+        // Check if player is requesting a respawn
+        CheckRespawn();
+
         // Finally, move!
         MoveVehicle(Input.Accelerate, Input.Brake, Input.TurnInput);
-
-        // Insert animation stuff here
-
     }
 
     // ====================== Helper Functions ==========================
@@ -283,6 +285,32 @@ public class KartController : MonoBehaviour
         UpdateSuspensionParams(FrontRightWheel);
         UpdateSuspensionParams(RearLeftWheel);
         UpdateSuspensionParams(RearRightWheel);
+    }
+
+    private void CheckRespawn()
+    {
+        // Player must hold the key for 1 sec to respawn.
+        if (!isBoosting && !InAir && !IsRespawning && Input.Respawn)
+            IsRespawning = true;
+        // If player stops requesting respawn or we enter the air, stop respawn.
+        else if (IsRespawning && (!Input.Respawn || InAir))
+        {
+            respawnTimer = 0.0f;
+            IsRespawning = false;
+        }
+        // Otherwise, keep updating the timer.
+        else if (IsRespawning)
+            respawnTimer += Time.fixedDeltaTime;
+
+        // Do the respawn! Reset timer and car velocity, position, and facing direction!
+        if (respawnTimer >= 1.0f)
+        {
+            respawnTimer = 0.0f;
+            Rigidbody.velocity = Vector3.zero;
+            this.transform.position = checkpointManager.respawnPoint.position;
+            this.transform.forward = checkpointManager.respawnPoint.forward;
+            Physics.SyncTransforms();
+        }
     }
 
     private Stats AddBoost()
