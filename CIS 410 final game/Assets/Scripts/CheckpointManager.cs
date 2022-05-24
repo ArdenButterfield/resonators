@@ -19,7 +19,7 @@ public class CheckpointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("In CheckpointManager Start()");
+        //Debug.Log("In CheckpointManager Start()");
         laps = new List<int>() {0,0};
         lastClearedCheckpoint = new List<int>() {0,0};
         WinPanel.SetActive(false);
@@ -31,10 +31,10 @@ public class CheckpointManager : MonoBehaviour
         nextExpectedCheckpoint %= num_checkpoints_on_track;
 
         if (checkpointnum == nextExpectedCheckpoint) {
-            print("Checkpoint cleared");
+            //print("Checkpoint cleared");
             lastClearedCheckpoint[carnum - 1] = checkpointnum;
             if (checkpointnum == 0) {
-                print("lap completed");
+                //print("lap completed");
                 laps[carnum-1] += 1;
                 if (laps[carnum-1] == required_laps) {
                     EndRace(carnum);
@@ -83,7 +83,7 @@ public class CheckpointManager : MonoBehaviour
     // Ends the race; declare the winner
     private void EndRace(int winner)
     {
-        Debug.Log("In EndRace()");
+        //Debug.Log("In EndRace()");
         if (winner == 1)
             WinPanelText.text = ("Player 1 wins!");
         else if (winner == 2)
@@ -94,7 +94,7 @@ public class CheckpointManager : MonoBehaviour
 
     public void LoadTitle()
     {
-        Debug.Log("In LoadTitle()");
+        //Debug.Log("In LoadTitle()");
         // Draws on this tutorial: https://www.youtube.com/watch?v=05OfmBIf5os
         SceneManager.LoadScene("title screen");
     }

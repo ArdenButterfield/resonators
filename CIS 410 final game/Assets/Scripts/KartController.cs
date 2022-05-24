@@ -146,6 +146,9 @@ public class KartController : MonoBehaviour
 
     // Drifting
     bool isDrifting = false;
+    bool isEmitting = false;            // this helps prevent skidmarks from starting every frame
+    public TrailRenderer[] tireMarks;   // EDITING
+    public ParticleSystem boostFlame;      // smoke prefabs for back left and back right tires EDITING
 
     // Suspension Params and Wheel Objects
     public Transform CenterOfMass;               // attatch kart collider parent obj here in Inspector
@@ -296,12 +299,14 @@ public class KartController : MonoBehaviour
         {
             WorkingStats = BoostingStats;
             boostTimer += Time.fixedDeltaTime;
+            StartBoostEffects();
 
             // If the timer expires, stop boost and reset timer.
             if (boostTimer > 1.0f)
             {
                 isBoosting = false;
                 boostTimer = 0.0f;
+                StopBoostEffects();
             }
         }
 
@@ -334,14 +339,36 @@ public class KartController : MonoBehaviour
         return WorkingStats;
     }
 
+    private void StartBoostEffects()
+    {
+        //boostFlame.Play();
+    }
+
+    private void StopBoostEffects()
+    {
+        //boostFlame.Stop();
+    }
+
     private void StartDriftEffects()
     {
-        
+        if (isEmitting)
+            return;
+
+        foreach (TrailRenderer T in tireMarks)
+            T.emitting = true;
+
+        isEmitting = true;
     }
 
     private void StopDriftEffects()
     {
+        if (!isEmitting)
+            return;
 
+        foreach (TrailRenderer T in tireMarks)
+            T.emitting = false;
+
+        isEmitting = false;
     }
 
     private void MoveVehicle(bool accelerate, bool brake, float turnInput)
