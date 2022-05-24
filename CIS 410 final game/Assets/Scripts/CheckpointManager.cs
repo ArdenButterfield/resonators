@@ -37,6 +37,7 @@ public class CheckpointManager : MonoBehaviour
         {
             lastClearedCheckpoint[carnum - 1] = checkpointnum;
             respawnPoint = respawnPoints[checkpointnum];
+            Debug.Log("Respawn checkpoint: " + respawnPoint);
 
             if (checkpointnum == 0)
             {
@@ -51,7 +52,6 @@ public class CheckpointManager : MonoBehaviour
     // Ends the race; declare the winner
     private void EndRace(int winner)
     {
-        //Debug.Log("In EndRace()");
         if (winner == 1)
             WinPanelText.text = ("Player 1 wins!");
         else if (winner == 2)
@@ -62,7 +62,6 @@ public class CheckpointManager : MonoBehaviour
 
     public void LoadTitle()
     {
-        //Debug.Log("In LoadTitle()");
         // Draws on this tutorial: https://www.youtube.com/watch?v=05OfmBIf5os
         SceneManager.LoadScene("title screen");
     }

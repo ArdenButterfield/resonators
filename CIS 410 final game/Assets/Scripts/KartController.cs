@@ -8,6 +8,18 @@ using UnityEngine;
 
 public class KartController : MonoBehaviour
 {
+    // Stat parameters
+    static private float topSpeed = 50f;
+    static private float acceleration = 1f;
+    static private float reverseSpeed = 15f;
+    static private float reverseAcceleration = 0.7f;
+    static private float accelerationCurve = 4f;
+    static private float braking = 4f;
+    static private float coastingDrag = 20f;
+    static private float grip = 1f;
+    static private float steer = 4f;
+    static private float addedGravity = 4f;
+
     // Kart base stat struct
     public struct Stats
     {
@@ -106,7 +118,8 @@ public class KartController : MonoBehaviour
     private Stats BoostingStats = new Stats
     {
         TopSpeed = 40f,
-        Acceleration = 200f
+        Acceleration = 50f,
+        Steer = 0.5f
     };
 
     // The drift struct!
@@ -118,9 +131,7 @@ public class KartController : MonoBehaviour
     };
 
     // Necessary game objects
-    //public GameObject playerTransform { get; private set; }
     public CheckpointManager checkpointManager;
-    //public Transform respawnPoint;
     public Rigidbody Rigidbody { get; private set; }
     public InputData Input { get; private set; }            // Initializes the Input object from KartInput.cs
     IInput[] Inputs;                                        // List of Inputs where generated inputs are stored
@@ -131,17 +142,7 @@ public class KartController : MonoBehaviour
     private float respawnTimer = 0.0f;
     private bool IsRespawning = false;
 
-    // Stat parameters
-    static private float topSpeed = 50f;
-    static private float acceleration = 1f;
-    static private float reverseSpeed = 15f;
-    static private float reverseAcceleration = 0.7f;
-    static private float accelerationCurve = 4f;
-    static private float braking = 4f;
-    static private float coastingDrag = 20f;
-    static private float grip = 1f;
-    static private float steer = 3f;
-    static private float addedGravity = 2f;
+    
 
     // Boost
     public NitroManager nitroManager;
@@ -156,7 +157,7 @@ public class KartController : MonoBehaviour
 
     // Suspension Params and Wheel Objects
     public Transform CenterOfMass;               // attatch kart collider parent obj here in Inspector
-    float AirborneReorientationCoeff = 0.5f;     // how quickly the kart rights itself while airborne
+    float AirborneReorientationCoeff = 0f;     // how quickly the kart rights itself while airborne
     float SuspensionHeight = 0.2f;
     float SuspensionSpring = 20000.0f;
     float SuspensionDamp = 500.0f;
@@ -290,10 +291,10 @@ public class KartController : MonoBehaviour
     private void CheckRespawn()
     {
         // Player must hold the key for 1 sec to respawn.
-        if (!isBoosting && !InAir && !IsRespawning && Input.Respawn)
+        if (!isBoosting && !IsRespawning && Input.Respawn)
             IsRespawning = true;
         // If player stops requesting respawn or we enter the air, stop respawn.
-        else if (IsRespawning && (!Input.Respawn || InAir))
+        else if (IsRespawning && !Input.Respawn)
         {
             respawnTimer = 0.0f;
             IsRespawning = false;
