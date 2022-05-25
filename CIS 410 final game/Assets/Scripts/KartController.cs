@@ -119,7 +119,7 @@ public class KartController : MonoBehaviour
     // The boost struct!
     private Stats BoostingStats = new Stats
     {
-        TopSpeed = 40f,
+        TopSpeed = 20f,
         Acceleration = 50f,
         Steer = 0.5f
     };
@@ -134,6 +134,7 @@ public class KartController : MonoBehaviour
 
     // Necessary game objects
     public CheckpointManager checkpointManager;
+    public RaceTimer raceTimer;
     public Rigidbody Rigidbody { get; private set; }
     public InputData Input { get; private set; }            // Initializes the Input object from KartInput.cs
     IInput[] Inputs;                                        // List of Inputs where generated inputs are stored

@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
-public class NewBehaviourScript : MonoBehaviour
+public class RaceTimer : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Stopwatch stopWatch = new Stopwatch();
+
+
     void Start()
     {
-        
+        stopWatch.Start();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
+
 }

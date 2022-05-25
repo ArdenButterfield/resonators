@@ -26,6 +26,9 @@ public class CheckpointManager : MonoBehaviour
         laps = new List<int>() {1,1};
         lastClearedCheckpoint = new List<int>() {0,0};
         WinPanel.SetActive(false);
+
+        // Race Timer
+
     }
 
     public void UpdateCheckpoints(int carnum, int checkpointnum)
