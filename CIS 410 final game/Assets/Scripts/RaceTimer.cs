@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
 using UnityEngine.UI;
+using System;
+using TMPro;
 
 public class RaceTimer : MonoBehaviour
 {
     public Stopwatch p1StopWatch = new Stopwatch();
     public Stopwatch p2StopWatch = new Stopwatch();
-    private float p1Time;
-    private float p2Time;
+    private string p1ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", 0, 0, 0);
+    private string p2ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", 0, 0, 0);
     private bool p1TimerActive = false;
     private bool p2TimerActive = false;
-    public Text p1CurrentTimeText;
-    public Text p2CurrentTimeText;
+    private TimeSpan ts = new TimeSpan();
+    public TextMeshProUGUI p1CurrentTimeText;
+    public TextMeshProUGUI p2CurrentTimeText;
 
     void Start()
     {
@@ -22,8 +25,11 @@ public class RaceTimer : MonoBehaviour
 
     void Update()
     {
-        p1CurrentTimeText.text = p1StopWatch.ToString();
-        p2CurrentTimeText.text = p2StopWatch.ToString();
+        ts = p1StopWatch.Elapsed;
+        p1ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+        p2ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+        p1CurrentTimeText.text = p1ElapsedTime;
+        p2CurrentTimeText.text = p2ElapsedTime;
     }
 
     public void StartTimers()

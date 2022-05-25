@@ -47,7 +47,6 @@ public class CheckpointManager : MonoBehaviour
                 p1RespawnPoint = respawnPoints[checkpointnum];
             else if (carnum == 2)
                 p2RespawnPoint = respawnPoints[checkpointnum];
-            //Debug.Log("Respawn checkpoint: " + respawnPoint);
 
             if (checkpointnum == 0)
             {
