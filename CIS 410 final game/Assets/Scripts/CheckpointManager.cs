@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class CheckpointManager : MonoBehaviour
 {
-    public int required_laps = 2;
-    public int num_checkpoints_on_track = 5;
+    public int required_laps;
+    public int num_checkpoints_on_track;
 
     // Car lap information.
     private List<int> laps;
@@ -23,14 +23,13 @@ public class CheckpointManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        laps = new List<int>() {0,0};
+        laps = new List<int>() {1,1};
         lastClearedCheckpoint = new List<int>() {0,0};
         WinPanel.SetActive(false);
     }
 
     public void UpdateCheckpoints(int carnum, int checkpointnum)
     {
-        Debug.Log("In UpdateCheckpoints()");
         int nextExpectedCheckpoint = lastClearedCheckpoint[carnum - 1] + 1;
         nextExpectedCheckpoint %= num_checkpoints_on_track;
 
@@ -38,7 +37,7 @@ public class CheckpointManager : MonoBehaviour
         {
             lastClearedCheckpoint[carnum - 1] = checkpointnum;
             respawnPoint = respawnPoints[checkpointnum];
-            Debug.Log("Respawn checkpoint: " + respawnPoint);
+            //Debug.Log("Respawn checkpoint: " + respawnPoint);
 
             if (checkpointnum == 0)
             {
