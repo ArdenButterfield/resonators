@@ -9414,6 +9414,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4915556555601283528, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4915556555601283531, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8545865872342530755, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
