@@ -354,11 +354,14 @@ public class KartController : MonoBehaviour
         // If we're drifting, set return value to drifting stats.
         if (isDrifting)
         {
-            WorkingStats = DriftingStats;
-            StartDriftEffects();
+            if (!InAir)
+            {
+                WorkingStats = DriftingStats;
+                StartDriftEffects();
+            }
 
             // Once drift input is no longer received, stop drift.
-            if (!Input.Drift)
+            if (!Input.Drift || InAir)
             {
                 isDrifting = false;
                 StopDriftEffects();
