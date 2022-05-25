@@ -2135,12 +2135,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player 1: move with WASD, boost is b, drift is spacebar, r to respawn
+  m_text: 'Player 1: move with WASD, boost is b, drift is spacebar, HOLD r to respawn
     to checkpoint
 
 
     Player 2: move with PL;'', boost is Return, drift is right
-    shift, \ to respawn to checkpoint'
+    shift, HOLD \ to respawn to checkpoint'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 920e8837096c149ad8130b3ba9f009e9, type: 2}
   m_sharedMaterial: {fileID: 8841589883587095000, guid: 920e8837096c149ad8130b3ba9f009e9, type: 2}
