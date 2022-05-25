@@ -14,7 +14,8 @@ public class CheckpointManager : MonoBehaviour
     private List<int> lastClearedCheckpoint;
 
     // Keeps a list of all checkpoints and updates respawnPoint with the most recently cleared valid checkpoint
-    public Transform respawnPoint;
+    public Transform p1RespawnPoint;
+    public Transform p2RespawnPoint;
     public List<Transform> respawnPoints = new List<Transform>();
 
     public GameObject WinPanel;
@@ -25,6 +26,8 @@ public class CheckpointManager : MonoBehaviour
     {
         laps = new List<int>() {1,1};
         lastClearedCheckpoint = new List<int>() {0,0};
+        p1RespawnPoint = respawnPoints[0];
+        p2RespawnPoint = respawnPoints[0];
         WinPanel.SetActive(false);
 
         // Race Timer
@@ -39,7 +42,11 @@ public class CheckpointManager : MonoBehaviour
         if (checkpointnum == nextExpectedCheckpoint)
         {
             lastClearedCheckpoint[carnum - 1] = checkpointnum;
-            respawnPoint = respawnPoints[checkpointnum];
+
+            if (carnum == 1)
+                p1RespawnPoint = respawnPoints[checkpointnum];
+            else if (carnum == 2)
+                p2RespawnPoint = respawnPoints[checkpointnum];
             //Debug.Log("Respawn checkpoint: " + respawnPoint);
 
             if (checkpointnum == 0)
