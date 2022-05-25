@@ -61,7 +61,7 @@ public class CrashDetector : MonoBehaviour
             if (volume > 1f) {
                 volume = 1f;
             }
-            //manager.playCrash(carNumber, volume);
+            manager.playCrash(carNumber, volume);
         }
 
         prevPosition = position;

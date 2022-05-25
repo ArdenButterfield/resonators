@@ -40,7 +40,7 @@ public class NitroManager : MonoBehaviour
             CoinBehavior coinScript = other.gameObject.GetComponent<CoinBehavior>();
             if (coinScript.PickupCoin()) {
                 AddNitro(nitroCoinAmount);
-                //soundManager.playPickup(carNumber);
+                soundManager.playPickup(carNumber);
             }
         }
     }
@@ -73,7 +73,7 @@ public class NitroManager : MonoBehaviour
         nitroLevel -= nitroBurnStep;
 
         UpdateSlider();
-        //soundManager.playBoost(carNumber);
+        soundManager.playBoost(carNumber);
 
     }
 

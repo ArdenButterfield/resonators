@@ -27,12 +27,6 @@ public class SoundManager : MonoBehaviour
         musicKickSource.Play();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Called from Nitro Manager
     public void playPickup(int CarNumber) {
         AudioSource playSource;
@@ -45,7 +39,7 @@ public class SoundManager : MonoBehaviour
         // is kind of weird, and why we need the modulo.
         int index = Random.Range(0,coinPickups.Length) % coinPickups.Length;
 
-        playSource.PlayOneShot(coinPickups[index]);
+        playSource.PlayOneShot(coinPickups[index], 0.5f);
     }
 
     // Called from Nitro Manager
