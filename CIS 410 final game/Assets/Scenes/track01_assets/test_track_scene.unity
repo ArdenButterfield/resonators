@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6583,15 +6583,15 @@ MonoBehaviour:
   car1FXSource: {fileID: 901979394}
   car2FXSource: {fileID: 229049765}
   coinPickups:
-  - {fileID: 8300000, guid: 077643ffb99ad40908f37a06e89fbb7b, type: 3}
-  - {fileID: 8300000, guid: bba57c18e30f24b0cb1c64b15bd7776b, type: 3}
-  - {fileID: 8300000, guid: aa7669d8d7a58449895b3897deb57f44, type: 3}
-  - {fileID: 8300000, guid: 50a38a222bc2f4676b795c308c1134da, type: 3}
-  - {fileID: 8300000, guid: ddbff9376aa1e4963abb55b6b8fd693a, type: 3}
-  - {fileID: 8300000, guid: 49edfa00dbba94a0aa995ea64bb22f1c, type: 3}
-  - {fileID: 8300000, guid: 582680d4f9dfc454f9bfc56bcfee40dd, type: 3}
-  musicLoop: {fileID: 8300000, guid: a4d9efa7e2c4b4f7cb84b437ae7e905b, type: 3}
-  musicKick: {fileID: 8300000, guid: 8dd5e6858472f49819a0bb229e1a5bc8, type: 3}
+  - {fileID: 8300000, guid: d6aed1611c64e410b9eb091ded231b40, type: 3}
+  - {fileID: 8300000, guid: 1194ed182226d4e27a055c4f32383116, type: 3}
+  - {fileID: 8300000, guid: fe1ab0b0566ba4dbbab52a13acdbf2f1, type: 3}
+  - {fileID: 8300000, guid: 62b6fea1ae8d64a6bab47fdfef788ff4, type: 3}
+  - {fileID: 8300000, guid: a2d1cadb6a21c4755903794fce611a5d, type: 3}
+  - {fileID: 8300000, guid: f0dff5e10d81e46a3b7e862330b99053, type: 3}
+  - {fileID: 8300000, guid: 522fd6186412e445481d170b6506914e, type: 3}
+  musicLoop: {fileID: 8300000, guid: 41fb9b7c2495741d6ac5ac6f032e6850, type: 3}
+  musicKick: {fileID: 8300000, guid: be75a6972c0344ab8a46549ff8f11d1e, type: 3}
   boostSounds:
   - {fileID: 8300000, guid: b990fe2d95ac043839c73a16fc8e944f, type: 3}
   - {fileID: 8300000, guid: ac7064d1419c7420fafeacfb3c8e4720, type: 3}
