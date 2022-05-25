@@ -39,7 +39,7 @@ public class SoundManager : MonoBehaviour
         // is kind of weird, and why we need the modulo.
         int index = Random.Range(0,coinPickups.Length) % coinPickups.Length;
 
-        playSource.PlayOneShot(coinPickups[index], 0.5f);
+        playSource.PlayOneShot(coinPickups[index], 0.3f);
     }
 
     // Called from Nitro Manager
