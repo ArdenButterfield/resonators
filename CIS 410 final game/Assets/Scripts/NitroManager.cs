@@ -15,10 +15,10 @@ public class NitroManager : MonoBehaviour
 {
     public Slider NitroMeter;
     private float nitroLevel;
-    private const float maxNitro = 100f;
+    private const float maxNitro = 12f;
     private float nitroBurnStep = 3f;
-    private float startingNitroAmount = 100f;
-    private float nitroCoinAmount = 1.0f;
+    private float startingNitroAmount = 0f;
+    private float nitroCoinAmount = 2.0f;
 
 
     public SoundManager soundManager;

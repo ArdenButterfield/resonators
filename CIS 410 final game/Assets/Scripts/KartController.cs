@@ -308,8 +308,8 @@ public class KartController : MonoBehaviour
         {
             respawnTimer = 0.0f;
             Rigidbody.velocity = Vector3.zero;
-            this.transform.position = checkpointManager.respawnPoint.position;
-            this.transform.forward = checkpointManager.respawnPoint.forward;
+            Rigidbody.transform.position = checkpointManager.respawnPoint.transform.position;
+            Rigidbody.transform.forward = checkpointManager.respawnPoint.transform.forward;
             Physics.SyncTransforms();
         }
     }

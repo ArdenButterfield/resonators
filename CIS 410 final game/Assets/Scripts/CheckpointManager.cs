@@ -30,6 +30,7 @@ public class CheckpointManager : MonoBehaviour
 
     public void UpdateCheckpoints(int carnum, int checkpointnum)
     {
+        Debug.Log("In UpdateCheckpoints()");
         int nextExpectedCheckpoint = lastClearedCheckpoint[carnum - 1] + 1;
         nextExpectedCheckpoint %= num_checkpoints_on_track;
 
