@@ -18,7 +18,7 @@ public class NitroManager : MonoBehaviour
     private const float maxNitro = 12f;
     private float nitroBurnStep = 3f;
     private float startingNitroAmount = 0f;
-    private float nitroCoinAmount = 2.0f;
+    private float nitroCoinAmount = 1.5f;
 
 
     public SoundManager soundManager;

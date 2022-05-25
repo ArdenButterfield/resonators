@@ -18,7 +18,7 @@ public class KartController : MonoBehaviour
     static private float coastingDrag = 20f;
     static private float grip = 1f;
     static private float steer = 4f;
-    static private float addedGravity = 4f;
+    static private float addedGravity = 1f;
 
     // Kart base stat struct
     public struct Stats
@@ -126,7 +126,7 @@ public class KartController : MonoBehaviour
     private Stats DriftingStats = new Stats
     {
         Acceleration = -0.5f,
-        Grip = -0.7f,
+        Grip = -0.6f,
         Steer = 1.5f
     };
 
