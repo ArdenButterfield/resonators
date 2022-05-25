@@ -524,6 +524,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e971e50d441fa4548917b2ffb7fbed21, type: 3}
   - {fileID: 8300000, guid: 29351d969c231477a936cd7e50d77c69, type: 3}
   - {fileID: 8300000, guid: 016e8686c31ec40e1bc7559aaa075638, type: 3}
+  respawnSounds:
+  - {fileID: 8300000, guid: 62893769e23ea4740bb076bde5df87d6, type: 3}
+  - {fileID: 8300000, guid: d383933038fec44d3a6630d0cf330b96, type: 3}
+  - {fileID: 8300000, guid: c5e4dce5bc98048489eb9bc40468372b, type: 3}
 --- !u!1 &7423377901085595034
 GameObject:
   m_ObjectHideFlags: 0
