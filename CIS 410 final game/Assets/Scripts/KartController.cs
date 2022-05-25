@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class KartController : MonoBehaviour
 {
+    public int carNumber;
+
     // Stat parameters
     static private float topSpeed = 50f;
     static private float acceleration = 1f;
@@ -171,6 +173,8 @@ public class KartController : MonoBehaviour
     public GameObject RearLeftMesh;
     public GameObject RearRightMesh;
 
+    public SoundManager soundManager;
+
     // Sets which layers the physics engine cares about
     public LayerMask GroundLayers = Physics.DefaultRaycastLayers;
 
@@ -306,6 +310,7 @@ public class KartController : MonoBehaviour
         // Do the respawn! Reset timer and car velocity, position, and facing direction!
         if (respawnTimer >= 1.0f)
         {
+            soundManager.playRespawn(carNumber);
             respawnTimer = 0.0f;
             Rigidbody.velocity = Vector3.zero;
             Rigidbody.transform.position = checkpointManager.respawnPoint.transform.position;
@@ -401,6 +406,11 @@ public class KartController : MonoBehaviour
             T.emitting = false;
 
         isEmitting = false;
+    }
+
+    public bool isKartRespawning()
+    {
+        return IsRespawning;
     }
 
     private void MoveVehicle(bool accelerate, bool brake, float turnInput)

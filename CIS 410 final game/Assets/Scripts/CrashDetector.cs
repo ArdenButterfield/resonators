@@ -20,6 +20,7 @@ public class CrashDetector : MonoBehaviour
     Vector3 acceleration;
 
     public SoundManager manager;
+    public KartController kartController;
 
     public int carNumber;
 
@@ -61,7 +62,10 @@ public class CrashDetector : MonoBehaviour
             if (volume > 1f) {
                 volume = 1f;
             }
-            manager.playCrash(carNumber, volume);
+            if (!kartController.isKartRespawning()) {
+                manager.playCrash(carNumber, volume);
+            }
+            
         }
 
         prevPosition = position;

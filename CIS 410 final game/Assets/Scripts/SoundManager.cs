@@ -15,6 +15,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] boostSounds;
     public AudioClip[] driftSounds;
     public AudioClip[] crashSounds;
+    public AudioClip[] respawnSounds;
 
     // Start is called before the first frame update
     void Start()
@@ -63,5 +64,16 @@ public class SoundManager : MonoBehaviour
         }
         int index = Random.Range(0, crashSounds.Length) % crashSounds.Length;
         playSource.PlayOneShot(crashSounds[index], volume);
+    }
+
+    public void playRespawn(int CarNumber) {
+        AudioSource playSource;
+        if (CarNumber == 1) {
+            playSource = car1FXSource;
+        } else {
+            playSource = car2FXSource;
+        }
+        int index = Random.Range(0, respawnSounds.Length) % respawnSounds.Length;
+        playSource.PlayOneShot(respawnSounds[index], 0.5f);
     }
 }

@@ -5378,6 +5378,10 @@ PrefabInstance:
       propertyPath: crashThreshold
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: kartController
+      value: 
+      objectReference: {fileID: 1498641024}
     - target: {fileID: 4466888475822015697, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5929,6 +5933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224685016bb7e114293c708e5910ab8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carNumber: 1
   checkpointManager: {fileID: 889767525}
   nitroManager: {fileID: 1498641026}
   tireMarks:
@@ -5944,6 +5949,7 @@ MonoBehaviour:
   FrontRightMesh: {fileID: 1214179719}
   RearLeftMesh: {fileID: 998759025}
   RearRightMesh: {fileID: 223776580}
+  soundManager: {fileID: 1572132662}
   GroundLayers:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -6429,6 +6435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224685016bb7e114293c708e5910ab8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carNumber: 1
   checkpointManager: {fileID: 889767525}
   nitroManager: {fileID: 1551570394}
   tireMarks:
@@ -6444,6 +6451,7 @@ MonoBehaviour:
   FrontRightMesh: {fileID: 993770870}
   RearLeftMesh: {fileID: 1841863499}
   RearRightMesh: {fileID: 622555366}
+  soundManager: {fileID: 1572132662}
   GroundLayers:
     serializedVersion: 2
     m_Bits: 4294967291
@@ -6606,6 +6614,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e971e50d441fa4548917b2ffb7fbed21, type: 3}
   - {fileID: 8300000, guid: 29351d969c231477a936cd7e50d77c69, type: 3}
   - {fileID: 8300000, guid: 016e8686c31ec40e1bc7559aaa075638, type: 3}
+  respawnSounds:
+  - {fileID: 8300000, guid: 62893769e23ea4740bb076bde5df87d6, type: 3}
+  - {fileID: 8300000, guid: d383933038fec44d3a6630d0cf330b96, type: 3}
+  - {fileID: 8300000, guid: c5e4dce5bc98048489eb9bc40468372b, type: 3}
 --- !u!114 &1572132663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7707,6 +7719,10 @@ PrefabInstance:
       propertyPath: crashThreshold
       value: 0.08
       objectReference: {fileID: 0}
+    - target: {fileID: 4220130668097024686, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: kartController
+      value: 
+      objectReference: {fileID: 1551570390}
     - target: {fileID: 5135156708204615449, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
       propertyPath: m_UseGravity
       value: 1
