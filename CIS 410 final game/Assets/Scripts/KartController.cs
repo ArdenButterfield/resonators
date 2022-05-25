@@ -327,14 +327,16 @@ public class KartController : MonoBehaviour
 
         // If not in the air or currently boosting, initiate boost if input and there's enough nitro.
         if (!isBoosting && !InAir && Input.Accelerate && Input.Boost && nitroManager.EnoughNitro())
+        {
             isBoosting = true;
+            StartBoostEffects();
+        }
 
         // If we are boosting, set return value to boosting stats and update timer.
         if (isBoosting)
         {
             WorkingStats = BoostingStats;
             boostTimer += Time.fixedDeltaTime;
-            StartBoostEffects();
 
             // If the timer expires, stop boost and reset timer.
             if (boostTimer > 1.0f)
@@ -379,12 +381,12 @@ public class KartController : MonoBehaviour
 
     private void StartBoostEffects()
     {
-        //boostFlame.Play();
+        boostFlame.Play();
     }
 
     private void StopBoostEffects()
     {
-        //boostFlame.Stop();
+        boostFlame.Stop();
     }
 
     private void StartDriftEffects()
