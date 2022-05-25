@@ -314,8 +314,16 @@ public class KartController : MonoBehaviour
             soundManager.playRespawn(carNumber);
             respawnTimer = 0.0f;
             Rigidbody.velocity = Vector3.zero;
-            Rigidbody.transform.position = checkpointManager.respawnPoint.transform.position;
-            Rigidbody.transform.forward = checkpointManager.respawnPoint.transform.forward;
+            if (carNumber == 1)
+            {
+                Rigidbody.transform.position = checkpointManager.p1RespawnPoint.transform.position;
+                Rigidbody.transform.forward = checkpointManager.p1RespawnPoint.transform.forward;
+            }
+            else if (carNumber == 2)
+            {
+                Rigidbody.transform.position = checkpointManager.p2RespawnPoint.transform.position;
+                Rigidbody.transform.forward = checkpointManager.p2RespawnPoint.transform.forward;
+            }    
             Physics.SyncTransforms();
         }
     }

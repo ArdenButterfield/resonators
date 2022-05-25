@@ -6000,7 +6000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 224685016bb7e114293c708e5910ab8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carNumber: 1
+  carNumber: 2
   checkpointManager: {fileID: 889767525}
   raceTimer: {fileID: 0}
   nitroManager: {fileID: 1498641026}
