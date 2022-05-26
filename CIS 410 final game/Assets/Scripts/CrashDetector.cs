@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Crash Detector
+// Arden Butterfield
 // We want a sound effect to play every time a car crashes. But what is a crash? This script uses acceleration
 // data to determine when a car crashes.
 

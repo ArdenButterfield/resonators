@@ -4,6 +4,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+// Checkpoint Manager
+// By: Arden Butterfield, Donny Ebel
+// Arden wrote the first version
+// Last updated: 5/25/22 Donny - rewrote most of UpdateCheckpoints()
+
 public class CheckpointManager : MonoBehaviour
 {
     public int required_laps;
@@ -28,10 +33,9 @@ public class CheckpointManager : MonoBehaviour
     public TextMeshProUGUI p1LapCounter;
     public TextMeshProUGUI p2LapCounter;
 
-    // Start is called before the first frame update
     void Start()
     {
-        laps = new List<int>() {-1, 0, 0};                      // first element is 1-indexing; laps[1] is p1, laps[2] is p2
+        laps = new List<int>() {-1, 0, 0};                      // 1-indexing; laps[1] is p1, laps[2] is p2
         lastClearedCheckpoint = new List<int>() { -1, 0, 0 };   // same here; this is for code readability!
         p1LapCounter.text = new string("1/" + required_laps);
         p2LapCounter.text = new string("1/" + required_laps);   // update both players' lap counters to 1 at start
@@ -50,14 +54,10 @@ public class CheckpointManager : MonoBehaviour
         nextExpectedCheckpoint = lastClearedCheckpoint[carnum] + 1;
         nextExpectedCheckpoint %= num_checkpoints_on_track;
 
-        Debug.Log("next: " + nextExpectedCheckpoint + " | lastCleared: " + lastClearedCheckpoint[carnum]);
-        Debug.Log("laps: " + laps[1]);
-
         // If we're at the next expected checkpoint (or at the finish line on the first lap)...
-        // The latter logic is required so that the laps will update appropriately from the beginning of the race.
+        // The latter logic is required so that the laps will update appropriately at the beginning of the race.
         if ((checkpointnum == nextExpectedCheckpoint) || (checkpointnum == 0 && laps[carnum] == 0))
         {
-            Debug.Log("In the if block in question.");
             // Update the last cleared checkpoint.
             lastClearedCheckpoint[carnum] = checkpointnum;
 
@@ -108,6 +108,8 @@ public class CheckpointManager : MonoBehaviour
             WinPanelText.text = ("Player 1 Wins!");
         else if (whoWon == 2)
             WinPanelText.text = ("Player 2 Wins!");
+        else
+            WinPanelText.text = ("This should not happen!");
 
         WinPanel.SetActive(true);
     }

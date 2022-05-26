@@ -4,7 +4,8 @@ using UnityEngine;
 
 // Reference Credit: ArcadeKart.cs from Karting Microgame @ learn.unity.com/project/karting-template
 // Adapted by: Donny Ebel (mechanics manager)
-// Last updated; 5/10/22 Donny
+// Respawn, drifting, and boosting by me
+// Last updated; 5/25/22 Donny
 
 public class KartController : MonoBehaviour
 {
@@ -144,8 +145,6 @@ public class KartController : MonoBehaviour
     private float respawnTimer = 0.0f;
     private bool IsRespawning = false;
 
-    
-
     // Boost
     public NitroManager nitroManager;
     bool isBoosting = false;
@@ -153,13 +152,13 @@ public class KartController : MonoBehaviour
 
     // Drifting
     bool isDrifting = false;
-    bool isEmitting = false;            // this helps prevent skidmarks from starting every frame
-    public TrailRenderer[] tireMarks;   // EDITING
-    public ParticleSystem boostFlame;      // smoke prefabs for back left and back right tires EDITING
+    bool isEmitting = false;                // this helps prevent skidmarks from starting every frame
+    public TrailRenderer[] tireMarks;
+    public ParticleSystem boostFlame;       // fire prefab for the boost
 
     // Suspension Params and Wheel Objects
-    public Transform CenterOfMass;               // attatch kart collider parent obj here in Inspector
-    float AirborneReorientationCoeff = 0f;     // how quickly the kart rights itself while airborne
+    public Transform CenterOfMass;              // attatch kart wheel collider parent obj here in Inspector
+    float AirborneReorientationCoeff = 0f;      // how quickly the kart rights itself while airborne
     float SuspensionHeight = 0.2f;
     float SuspensionSpring = 20000.0f;
     float SuspensionDamp = 500.0f;
@@ -297,7 +296,7 @@ public class KartController : MonoBehaviour
         // Player must hold the key for 1 sec to respawn.
         if (!isBoosting && !IsRespawning && Input.Respawn)
             IsRespawning = true;
-        // If player stops requesting respawn or we enter the air, stop respawn.
+        // If player stops requesting respawn, stop respawn.
         else if (IsRespawning && !Input.Respawn)
         {
             respawnTimer = 0.0f;
@@ -310,9 +309,9 @@ public class KartController : MonoBehaviour
         // Do the respawn! Reset timer and car velocity, position, and facing direction!
         if (respawnTimer >= 1.0f)
         {
-            soundManager.playRespawn(carNumber);
             respawnTimer = 0.0f;
             Rigidbody.velocity = Vector3.zero;
+
             if (carNumber == 1)
             {
                 Rigidbody.transform.position = checkpointManager.p1RespawnPoint.transform.position;
@@ -323,8 +322,16 @@ public class KartController : MonoBehaviour
                 Rigidbody.transform.position = checkpointManager.p2RespawnPoint.transform.position;
                 Rigidbody.transform.forward = checkpointManager.p2RespawnPoint.transform.forward;
             }    
+
             Physics.SyncTransforms();
+            soundManager.playRespawn(carNumber);
         }
+    }
+
+    // For crash detector and the future!
+    public bool isKartRespawning()
+    {
+        return IsRespawning;
     }
 
     private Stats AddBoost()
@@ -336,7 +343,7 @@ public class KartController : MonoBehaviour
         if (!isBoosting && !InAir && Input.Accelerate && Input.Boost && nitroManager.EnoughNitro())
         {
             isBoosting = true;
-            StartBoostEffects();
+            boostFlame.Play();
         }
 
         // If we are boosting, set return value to boosting stats and update timer.
@@ -350,7 +357,7 @@ public class KartController : MonoBehaviour
             {
                 isBoosting = false;
                 boostTimer = 0.0f;
-                StopBoostEffects();
+                boostFlame.Stop();
             }
         }
 
@@ -386,16 +393,6 @@ public class KartController : MonoBehaviour
         return WorkingStats;
     }
 
-    private void StartBoostEffects()
-    {
-        boostFlame.Play();
-    }
-
-    private void StopBoostEffects()
-    {
-        boostFlame.Stop();
-    }
-
     private void StartDriftEffects()
     {
         if (isEmitting)
@@ -416,11 +413,6 @@ public class KartController : MonoBehaviour
             T.emitting = false;
 
         isEmitting = false;
-    }
-
-    public bool isKartRespawning()
-    {
-        return IsRespawning;
     }
 
     private void MoveVehicle(bool accelerate, bool brake, float turnInput)
