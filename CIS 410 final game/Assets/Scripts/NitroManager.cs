@@ -6,10 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; // Required for Slider
- 
 using TMPro;
-
-
 
 public class NitroManager : MonoBehaviour
 {

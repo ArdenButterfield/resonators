@@ -8,50 +8,33 @@ using TMPro;
 
 public class RaceTimer : MonoBehaviour
 {
-    public Stopwatch p1StopWatch = new Stopwatch();
-    public Stopwatch p2StopWatch = new Stopwatch();
-    private string p1ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", 0, 0, 0);
-    private string p2ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", 0, 0, 0);
-    private bool p1TimerActive = false;
-    private bool p2TimerActive = false;
+    public Stopwatch stopWatch = new Stopwatch();
+    private string elapsedTime = String.Format("{0:00}:{1:00}.{2:000}", 0, 0, 0);
+    public bool timerActive = false;
     private TimeSpan ts = new TimeSpan();
-    public TextMeshProUGUI p1CurrentTimeText;
-    public TextMeshProUGUI p2CurrentTimeText;
-
-    void Start()
-    {
-        StartTimers();
-    }
+    public TextMeshProUGUI currentTimeText;
 
     void Update()
     {
-        ts = p1StopWatch.Elapsed;
-        p1ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-        p2ElapsedTime = String.Format("{0:00}:{1:00}.{2:00}", ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-        p1CurrentTimeText.text = p1ElapsedTime;
-        p2CurrentTimeText.text = p2ElapsedTime;
+        ts = stopWatch.Elapsed;
+        elapsedTime = String.Format("{0:00}:{1:00}.{2:000}", ts.Minutes, ts.Seconds, ts.Milliseconds);
+        currentTimeText.text = elapsedTime;
     }
 
-    public void StartTimers()
+    public void StartTimer()
     {
-        p1StopWatch.Start();
-        p2StopWatch.Start();
-        p1TimerActive = true;
-        p2TimerActive = true;
+        stopWatch.Start();
+        timerActive = true;
+        currentTimeText.color = new Color(0, 255, 0, 255);
     }
 
-    public void StopTimer(int playernum)
+    public void StopTimer()
     {
-        if (playernum == 1)
+        if (timerActive)
         {
-            p1StopWatch.Stop();
-            p1TimerActive = false;
-        }
-        else if (playernum ==2)
-        {
-            p2StopWatch.Stop();
-            p2TimerActive = false;
+            stopWatch.Stop();
+            timerActive = false;
+            currentTimeText.color = new Color(0, 200, 255, 255);
         }
     }
-
 }
