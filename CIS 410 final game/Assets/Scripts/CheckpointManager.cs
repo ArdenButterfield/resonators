@@ -22,16 +22,16 @@ public class CheckpointManager : MonoBehaviour
     public RaceTimer p2RaceTimer;
     private int winner;     // 0 if no one won yet; set to carnum who won
 
-    // Keeps a list of all checkpoints and updates respawnPoint with the most recently cleared valid checkpoint
-    public Transform p1RespawnPoint;
-    public Transform p2RespawnPoint;
-    public List<Transform> respawnPoints = new List<Transform>();
-
     // UI Objects
     public GameObject WinPanel;
     public TextMeshProUGUI WinPanelText;
     public TextMeshProUGUI p1LapCounter;
     public TextMeshProUGUI p2LapCounter;
+
+    // Keeps a list of all checkpoints and updates respawnPoint with the most recently cleared valid checkpoint
+    [System.NonSerialized] public Transform p1RespawnPoint;
+    [System.NonSerialized] public Transform p2RespawnPoint;
+    public List<Transform> respawnPoints = new List<Transform>();
 
     void Start()
     {
