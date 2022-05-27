@@ -10,13 +10,13 @@ public class PlayButtonHandler : MonoBehaviour
 {
     public int Player1DefaultCarIndex = 0;
     public int Player2DefaultCarIndex = 0;
+
     void Start()
     {
         // Default indices of cars for the two players.
         PlayerPrefs.SetInt("Player 1 car", Player1DefaultCarIndex);
         PlayerPrefs.SetInt("Player 2 car", Player2DefaultCarIndex);
         PlayerPrefs.Save();
-
     }
     
     public void LoadScene(string SceneName)
