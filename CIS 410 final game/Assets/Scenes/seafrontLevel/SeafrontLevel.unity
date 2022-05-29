@@ -41908,7 +41908,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
       propertyPath: respawnPoints.Array.size
-      value: 8
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
       propertyPath: respawnPoints.Array.data[0]
