@@ -3988,6 +3988,11 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &914080508 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8545865872923075020, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
+  m_PrefabInstance: {fileID: 8545865873832801238}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &937257031
 GameObject:
   m_ObjectHideFlags: 0
@@ -9496,6 +9501,56 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2098629390}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2126417376
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2126417378}
+  - component: {fileID: 2126417377}
+  m_Layer: 0
+  m_Name: singleplayer manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2126417377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126417376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a1dcf7fdc9644a73985ec6b2709b401, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1camera: {fileID: 963194225}
+  player2camera: {fileID: 487957014}
+  player1car: {fileID: 1551570388}
+  player2car: {fileID: 1498641022}
+  canvas: {fileID: 914080508}
+  car1Audio: {fileID: 901979394}
+--- !u!4 &2126417378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2126417376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 360, y: 10.650002, z: 377.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2133195188 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 18ff28de6a3794d4b8b58d5e619e58df, type: 3}
@@ -10412,6 +10467,18 @@ PrefabInstance:
     - target: {fileID: 8545865872923075020, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545865873379129505, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545865873379129505, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8545865873379129505, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8545865873497288827, guid: 43190a8ff4b9b944f8875e8119501ff6, type: 3}
       propertyPath: m_AnchorMax.x
