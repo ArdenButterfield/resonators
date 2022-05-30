@@ -283,6 +283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!114 &52824486 stripped
@@ -1365,6 +1369,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!1001 &296138717
@@ -1487,6 +1495,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!1001 &362404777
@@ -1548,6 +1560,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!4 &387676857 stripped
@@ -1984,6 +2000,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!114 &667602940
@@ -2141,6 +2161,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!1 &671310813 stripped
@@ -38597,6 +38621,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!4 &746075247 stripped
@@ -38952,6 +38980,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!146 &921304265 stripped
@@ -39746,6 +39778,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!114 &1227434807 stripped
@@ -39818,6 +39854,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!1 &1250312303 stripped
@@ -42014,6 +42054,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!1001 &1548474780
@@ -42969,6 +43013,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: checkpoint (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 4353982705812800274, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
+      propertyPath: Manager
+      value: 
+      objectReference: {fileID: 505490985}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ecb95db4c7ee64ade9d7393e591c36a3, type: 3}
 --- !u!114 &1887731556
