@@ -29,10 +29,17 @@ public class Singlplayer : MonoBehaviour
 
             GameObject Nitrometer1 = canvas.transform.Find("Nitrometer1").gameObject;
             GameObject Nitrometer2 = canvas.transform.Find("Nitrometer2").gameObject;
+
+            GameObject P2TimerText = canvas.transform.Find("P2RaceTimerText").gameObject;
+            GameObject P2LapCounter = canvas.transform.Find("P2LapCounter").gameObject;
+
             GameObject WinPanel = canvas.transform.Find("win panel").gameObject;
             GameObject WinPanelText = WinPanel.transform.Find("Win panel text").gameObject;
             
             Nitrometer2.SetActive(false);
+            P2TimerText.SetActive(false);
+            P2LapCounter.SetActive(false);
+
 
             RectTransform N1transform = Nitrometer1.GetComponent<RectTransform>();
             Slider N1Slider = Nitrometer1.GetComponent<Slider>();
@@ -42,6 +49,9 @@ public class Singlplayer : MonoBehaviour
             N1transform.anchorMin = new Vector2(0.5f,0f);
             N1transform.anchoredPosition = new Vector2(0f,10f);
             N1transform.sizeDelta = new Vector2(800f,20f);
+
+            WinPanelText.GetComponent<TMPro.TextMeshProUGUI>().SetText("You win!");
+
 
             // We just have 1 car, so we want it's sounds coming from the center.
             car1Audio.panStereo = 0f;

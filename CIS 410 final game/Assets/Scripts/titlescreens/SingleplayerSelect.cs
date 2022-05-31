@@ -10,6 +10,13 @@ public class SingleplayerSelect : MonoBehaviour
 {
     public Toggle singleplayerToggle;
 
+    void Start() {
+        print(PlayerPrefs.GetInt("singleplayer"));
+        if (PlayerPrefs.GetInt("singleplayer") == 1) {
+            singleplayerToggle.isOn = true;
+        }
+    }
+
     public void setSinglePlayer() {
         // True for singleplayer, false for 2 player.
 
