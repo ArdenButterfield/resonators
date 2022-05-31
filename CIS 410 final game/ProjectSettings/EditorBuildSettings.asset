@@ -11,10 +11,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/car select.unity
     guid: 1ec134aae43f04dc381d8349d47da3f6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/testLevel/testTrackScene.unity
     guid: 897516358fc16a043b8df449109b7435
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/mountainLevel/mountainLevelScene.unity
     guid: 6d27b2349b043b84d8d1909a199ea713
+  - enabled: 1
+    path: Assets/Scenes/seafrontLevel/SeafrontLevel.unity
+    guid: eaa6cc8223234a34fbf98674a44280fa
   m_configObjects: {}
