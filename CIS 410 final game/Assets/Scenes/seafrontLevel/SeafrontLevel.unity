@@ -39536,6 +39536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KB3D_NEC_BldgLG_A (2)
       objectReference: {fileID: 0}
+    - target: {fileID: -555616918146722083, guid: e97525814a06d93438312f1164ce0637, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -11.66
+      objectReference: {fileID: 0}
     - target: {fileID: 22798082834175384, guid: e97525814a06d93438312f1164ce0637, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -40851,6 +40855,10 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: e97525814a06d93438312f1164ce0637, type: 3}
       propertyPath: m_Name
       value: KB3D_NEC_BldgLG_A (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: -555616918146722083, guid: e97525814a06d93438312f1164ce0637, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.52
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e97525814a06d93438312f1164ce0637, type: 3}
@@ -43560,6 +43568,10 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: e97525814a06d93438312f1164ce0637, type: 3}
       propertyPath: m_Name
       value: KB3D_NEC_BldgLG_A (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: -555616918146722083, guid: e97525814a06d93438312f1164ce0637, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -12.25
       objectReference: {fileID: 0}
     - target: {fileID: 22798082834175384, guid: e97525814a06d93438312f1164ce0637, type: 3}
       propertyPath: m_IsActive
