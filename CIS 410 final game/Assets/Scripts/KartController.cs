@@ -316,18 +316,30 @@ public class KartController : MonoBehaviour
 
             if (carNumber == 1)
             {
-                Rigidbody.transform.position = checkpointManager.p1RespawnPoint.transform.position;
-                Rigidbody.transform.forward = checkpointManager.p1RespawnPoint.transform.forward;
+                RespawnToPoint(checkpointManager.p1RespawnPoint);
+            } else {
+                RespawnToPoint(checkpointManager.p2RespawnPoint);
             }
-            else if (carNumber == 2)
-            {
-                Rigidbody.transform.position = checkpointManager.p2RespawnPoint.transform.position;
-                Rigidbody.transform.forward = checkpointManager.p2RespawnPoint.transform.forward;
-            }    
+            
 
             Physics.SyncTransforms();
             soundManager.playRespawn(carNumber);
         }
+    }
+
+    private void RespawnToPoint(Transform point)
+    {
+        Vector3 forward = point.forward;
+        Vector3 position = point.position;
+        if (carNumber == 1) {
+            position = Quaternion.AngleAxis(-90, Vector3.up) * forward * 1.5f + position;
+        }
+        else {
+            position = Quaternion.AngleAxis(90, Vector3.up) * forward * 1.5f + position;
+        }
+        Rigidbody.transform.position = position;
+        Rigidbody.transform.forward = forward;
+
     }
 
     // For crash detector and the future!
