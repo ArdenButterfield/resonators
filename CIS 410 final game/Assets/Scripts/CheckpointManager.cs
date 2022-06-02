@@ -25,6 +25,7 @@ public class CheckpointManager : MonoBehaviour
 
     // UI Objects
     private float countdownTimer = 3.0f;
+    public float startTime;
     public GameObject WinPanel;
     public GameObject CountdownPanel;
     public TextMeshProUGUI CountdownText;
@@ -37,6 +38,9 @@ public class CheckpointManager : MonoBehaviour
     [System.NonSerialized] public Transform p2RespawnPoint;
     public List<Transform> respawnPoints = new List<Transform>();
 
+    public SoundManager soundmanager;
+
+
     void Start()
     {
         laps = new List<int>() {-1, 0, 0};                      // 1-indexing; laps[1] is p1, laps[2] is p2
@@ -46,6 +50,8 @@ public class CheckpointManager : MonoBehaviour
         p1RespawnPoint = respawnPoints[0];
         p2RespawnPoint = respawnPoints[0];                      // first checkpoint is the finish line!
         WinPanel.SetActive(false);
+        startTime = Time.time;
+        soundmanager.playTick();
     }
 
     public void UpdateCheckpoints(int carnum, int checkpointnum)    // carnum is always 1 or 2
@@ -106,15 +112,17 @@ public class CheckpointManager : MonoBehaviour
         // If race hasn't started, update countdown text.
         if (!raceStarted)
         {
-            countdownTimer -= Time.deltaTime;
+            countdownTimer = startTime + 3f - Time.time;
 
-            if (countdownTimer <= 2.0f)
+            if (countdownTimer <= 2.0f && CountdownText.text == "3")
             {
                 CountdownText.text = "2";
+                soundmanager.playTick();
             }
-            if (countdownTimer <= 1.0f)
+            if (countdownTimer <= 1.0f && CountdownText.text == "2")
             {
                 CountdownText.text = "1";
+                soundmanager.playTick();
             }
             // When timer expires, reset it, then start race!
             if (countdownTimer <= 0)
@@ -144,6 +152,8 @@ public class CheckpointManager : MonoBehaviour
         raceStarted = true;
         p1RaceTimer.StartTimer();
         p2RaceTimer.StartTimer();
+
+        soundmanager.startTheMusic();
     }
 
     // End the race and declare the winner

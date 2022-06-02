@@ -53573,6 +53573,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
+      propertyPath: soundmanager
+      value: 
+      objectReference: {fileID: 1560042932}
+    - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
       propertyPath: CountdownText
       value: 
       objectReference: {fileID: 1566795208}

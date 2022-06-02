@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource musicKickSource;
     public AudioSource car1FXSource;
     public AudioSource car2FXSource;
+    public AudioSource countdownSource;
 
     public AudioClip[] coinPickups;
     public AudioClip musicLoop;
@@ -16,6 +17,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] driftSounds;
     public AudioClip[] crashSounds;
     public AudioClip[] respawnSounds;
+    public AudioClip tick;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,18 @@ public class SoundManager : MonoBehaviour
         musicKickSource.loop = true;
         musicSource.clip = musicLoop;
         musicKickSource.clip = musicKick;
+        countdownSource.clip = tick;
+    }
+
+
+    public void playTick()
+    {
+        countdownSource.Play();
+    }
+
+
+    public void startTheMusic()
+    {
         musicSource.Play();
         musicKickSource.Play();
     }
@@ -52,7 +66,7 @@ public class SoundManager : MonoBehaviour
             playSource = car2FXSource;
         }
         int index = Random.Range(0, boostSounds.Length) % boostSounds.Length;
-        playSource.PlayOneShot(boostSounds[index]);
+        playSource.PlayOneShot(boostSounds[index],0.3f);
     }
 
     public void playCrash(int CarNumber, float volume) {
