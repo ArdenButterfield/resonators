@@ -2511,6 +2511,42 @@ PrefabInstance:
       propertyPath: musicLoop
       value: 
       objectReference: {fileID: 8300000, guid: cf7ae3e15a4064d84b19ebb0362aaddb, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: b131ea5be21c2475cb0a775f8a1f0dbc, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: eb148aa16657d4bbdb7d548a32b13ca8, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 5df5a63d54cb149efa029ab91460a47d, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: f7d8b9db4d6f64a75aad262a8a5f8098, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ed5d22ed75014ad0afde15c6d3de5b7, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 752538544f8474f82a7441a9cd6662b5, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9a1471a9186014e04a5f087e66ab1b84, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: coinPickups.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: 12708bd2fec3540128e7f0fc047d60ba, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
 --- !u!82 &145285906 stripped
