@@ -144,6 +144,7 @@ public class KartController : MonoBehaviour
     private bool InAir = false;
     private float respawnTimer = 0.0f;
     private bool IsRespawning = false;
+    public bool InputDisabled = false;
 
     // Boost
     public NitroManager nitroManager;
@@ -202,8 +203,9 @@ public class KartController : MonoBehaviour
         Rigidbody.centerOfMass = transform.InverseTransformPoint(CenterOfMass.position);
         UpdateAllSuspensionParams();
 
-        // Generate inputs, grounded info and add a little gravity if in the air.
-        GetInputs();
+        // If the race started, get inputs. Then get grounded info and add a little gravity if in the air.
+        if (checkpointManager.getRaceStarted())
+            GetInputs();
         GetGroundedPercent();
         AddAirborneGravity();
 

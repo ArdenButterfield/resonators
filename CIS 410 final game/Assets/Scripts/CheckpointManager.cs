@@ -21,9 +21,13 @@ public class CheckpointManager : MonoBehaviour
     public RaceTimer p1RaceTimer;
     public RaceTimer p2RaceTimer;
     private int winner;     // 0 if no one won yet; set to carnum who won
+    private bool raceStarted = false;
 
     // UI Objects
+    private float countdownTimer = 3.0f;
     public GameObject WinPanel;
+    public GameObject CountdownPanel;
+    public TextMeshProUGUI CountdownText;
     public TextMeshProUGUI WinPanelText;
     public TextMeshProUGUI p1LapCounter;
     public TextMeshProUGUI p2LapCounter;
@@ -42,10 +46,6 @@ public class CheckpointManager : MonoBehaviour
         p1RespawnPoint = respawnPoints[0];
         p2RespawnPoint = respawnPoints[0];                      // first checkpoint is the finish line!
         WinPanel.SetActive(false);
-
-        // Start the timers. Eventually move these when implement countdown.
-        p1RaceTimer.StartTimer();
-        p2RaceTimer.StartTimer();
     }
 
     public void UpdateCheckpoints(int carnum, int checkpointnum)    // carnum is always 1 or 2
@@ -101,6 +101,51 @@ public class CheckpointManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        // If race hasn't started, update countdown text.
+        if (!raceStarted)
+        {
+            countdownTimer -= Time.deltaTime;
+
+            if (countdownTimer <= 2.0f)
+            {
+                CountdownText.text = "2";
+            }
+            if (countdownTimer <= 1.0f)
+            {
+                CountdownText.text = "1";
+            }
+            // When timer expires, reset it, then start race!
+            if (countdownTimer <= 0)
+            {
+                CountdownText.text = "GO!!";
+                countdownTimer = 0.0f;
+                StartRace();
+            }
+        }
+        // If we have started, update timer and disable text if needed.
+        else if (raceStarted)
+        {
+            if (countdownTimer < 1.0f)
+            {
+                countdownTimer += Time.deltaTime;
+            }
+            else
+            {
+                CountdownText.enabled = false;
+                CountdownPanel.SetActive(false);
+            }
+        }
+    }
+
+    private void StartRace()
+    {
+        raceStarted = true;
+        p1RaceTimer.StartTimer();
+        p2RaceTimer.StartTimer();
+    }
+
     // End the race and declare the winner
     private void EndRace(int whoWon)
     {
@@ -118,5 +163,10 @@ public class CheckpointManager : MonoBehaviour
     {
         // Draws on this tutorial: https://www.youtube.com/watch?v=05OfmBIf5os
         SceneManager.LoadScene("title screen");
+    }
+
+    public bool getRaceStarted()
+    {
+        return raceStarted;
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.6572215, g: 0.18648139, b: 0.14316794, a: 1}
+  m_IndirectSpecularColor: {r: 0.65705264, g: 0.18648198, b: 0.14343855, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -45353,6 +45353,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2047649513}
     m_Modifications:
+    - target: {fileID: 3665395607432953677, guid: 46577bf5a0217fd4896f8b45e36333d9, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3665395607432953682, guid: 46577bf5a0217fd4896f8b45e36333d9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -45383,7 +45387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3665395607432953682, guid: 46577bf5a0217fd4896f8b45e36333d9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -880.6995
+      value: -878.34973
       objectReference: {fileID: 0}
     - target: {fileID: 3665395607432953682, guid: 46577bf5a0217fd4896f8b45e36333d9, type: 3}
       propertyPath: m_SizeDelta.y
@@ -45419,7 +45423,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3665395607432953682, guid: 46577bf5a0217fd4896f8b45e36333d9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -427.99997
+      value: -429.17487
       objectReference: {fileID: 0}
     - target: {fileID: 3665395607432953682, guid: 46577bf5a0217fd4896f8b45e36333d9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -47132,6 +47136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carNumber: 1
   checkpointManager: {fileID: 505490985}
+  InputDisabled: 0
   nitroManager: {fileID: 968691936}
   tireMarks:
   - {fileID: 1423024320}
@@ -49898,6 +49903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carNumber: 2
   checkpointManager: {fileID: 505490985}
+  InputDisabled: 0
   nitroManager: {fileID: 1250312308}
   tireMarks:
   - {fileID: 421877089}
@@ -52782,7 +52788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6381854955464027971, guid: ca8f4c960ce49d14e9bf83f5ff463bf6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 365.0966
+      value: 381
       objectReference: {fileID: 0}
     - target: {fileID: 6381854955464027971, guid: ca8f4c960ce49d14e9bf83f5ff463bf6, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -53567,9 +53573,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
+      propertyPath: CountdownText
+      value: 
+      objectReference: {fileID: 1566795208}
+    - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
       propertyPath: required_laps
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
+      propertyPath: CountdownPanel
+      value: 
+      objectReference: {fileID: 1566795209}
     - target: {fileID: 7067023776067194951, guid: 5d6ee423dd8b2a740a793082670d6fb0, type: 3}
       propertyPath: num_checkpoints_on_track
       value: 12
@@ -53989,6 +54003,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2047649513}
     m_Modifications:
+    - target: {fileID: 4753390063011128964, guid: 1a46b526fc9522a469edd7d12ec6bc7d, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4753390063011128966, guid: 1a46b526fc9522a469edd7d12ec6bc7d, type: 3}
       propertyPath: m_Name
       value: P1RaceTimerText
@@ -54023,7 +54041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4753390063011128967, guid: 1a46b526fc9522a469edd7d12ec6bc7d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -771.53
+      value: -764.765
       objectReference: {fileID: 0}
     - target: {fileID: 4753390063011128967, guid: 1a46b526fc9522a469edd7d12ec6bc7d, type: 3}
       propertyPath: m_SizeDelta.y
@@ -54059,7 +54077,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4753390063011128967, guid: 1a46b526fc9522a469edd7d12ec6bc7d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -369
+      value: -372.3825
       objectReference: {fileID: 0}
     - target: {fileID: 4753390063011128967, guid: 1a46b526fc9522a469edd7d12ec6bc7d, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -54492,6 +54510,119 @@ MonoBehaviour:
   perpDirRotated: {x: -0.9933711, y: 0, z: -0.1149514}
   markerStartUVY: 0.29518127
   customPoints: []
+--- !u!1001 &1566795207
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2047649513}
+    m_Modifications:
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 629.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 201.2979
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 141
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200577, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 884774245420200578, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+      propertyPath: m_Name
+      value: Race Start Countdown
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+--- !u!114 &1566795208 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 884774245797515023, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+  m_PrefabInstance: {fileID: 1566795207}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1566795209 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 884774245420200578, guid: 9650a29fb5f1f604186c7e0c69da688d, type: 3}
+  m_PrefabInstance: {fileID: 1566795207}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1569931873 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 478454, guid: 80e74acf412f1f7419369c6003532087, type: 3}
@@ -55979,6 +56110,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2047649513}
     m_Modifications:
+    - target: {fileID: 1850176451143991136, guid: fb8bb784d8a27f54b93b1a460ebc313b, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1850176451143991137, guid: fb8bb784d8a27f54b93b1a460ebc313b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
