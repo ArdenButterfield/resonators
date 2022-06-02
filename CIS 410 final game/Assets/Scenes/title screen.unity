@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2594,7 +2594,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -84}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1811687116
@@ -2617,11 +2617,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player 1: move with WASD, boost is b, drift is spacebar, HOLD r to respawn
-    to checkpoint
+  m_text: 'Player 1: move with WASD, boost is v (or right shift), drift is spacebar,
+    HOLD r to respawn to checkpoint
 
-    Player 2: move with PL;'', boost is Return, drift is right
-    shift, HOLD \ to respawn to checkpoint'
+    Player 2: move with PL;'', boost is Return,
+    drift is right shift, HOLD \ to respawn to checkpoint'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 920e8837096c149ad8130b3ba9f009e9, type: 2}
   m_sharedMaterial: {fileID: 8841589883587095000, guid: 920e8837096c149ad8130b3ba9f009e9, type: 2}

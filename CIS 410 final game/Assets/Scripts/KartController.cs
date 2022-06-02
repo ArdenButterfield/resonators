@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // Reference Credit: ArcadeKart.cs from Karting Microgame @ learn.unity.com/project/karting-template
 // Adapted by: Donny Ebel (mechanics manager)
@@ -143,6 +144,7 @@ public class KartController : MonoBehaviour
     private bool HasCollision = false;
     private bool InAir = false;
     private float respawnTimer = 0.0f;
+    public Slider respawnSlider;
     private bool IsRespawning = false;
     public bool InputDisabled = false;
 
@@ -195,6 +197,7 @@ public class KartController : MonoBehaviour
         // Get rigidbody and raw inputs
         Rigidbody = GetComponent<Rigidbody>();
         Inputs = GetComponents<IInput>();
+        respawnSlider.value = 0;
     }
 
     void FixedUpdate()
@@ -317,29 +320,31 @@ public class KartController : MonoBehaviour
             if (carNumber == 1)
             {
                 RespawnToPoint(checkpointManager.p1RespawnPoint);
-            } else {
+            } 
+            else
+            {
                 RespawnToPoint(checkpointManager.p2RespawnPoint);
             }
             
-
             Physics.SyncTransforms();
             soundManager.playRespawn(carNumber);
         }
+
+        respawnSlider.SetValueWithoutNotify(respawnTimer);
     }
 
     private void RespawnToPoint(Transform point)
     {
         Vector3 forward = point.forward;
         Vector3 position = point.position;
-        if (carNumber == 1) {
+
+        if (carNumber == 1)
             position = Quaternion.AngleAxis(-90, Vector3.up) * forward * 1.5f + position;
-        }
-        else {
+        else 
             position = Quaternion.AngleAxis(90, Vector3.up) * forward * 1.5f + position;
-        }
+
         Rigidbody.transform.position = position;
         Rigidbody.transform.forward = forward;
-
     }
 
     // For crash detector and the future!
