@@ -66,6 +66,7 @@ public class CheckpointManager : MonoBehaviour
         {
             // Update the last cleared checkpoint.
             lastClearedCheckpoint[carnum] = checkpointnum;
+            //Debug.Log("P" + carnum + " cleared checkpoint " + checkpointnum);
 
             // Update respawn points for appropriate player
             if (carnum == 1)
