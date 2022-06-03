@@ -21,6 +21,8 @@ public class NitroManager : MonoBehaviour
     public SoundManager soundManager;
     public int carNumber;
 
+
+
     // Start is called before the first frame update
     void Start()
     {

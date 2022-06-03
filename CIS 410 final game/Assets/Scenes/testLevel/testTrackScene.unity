@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 110218954}
   m_Layer: 0
   m_Name: TrackWall 6
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -813,7 +813,7 @@ GameObject:
   - component: {fileID: 180077874}
   m_Layer: 0
   m_Name: TrackWall 13
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -925,7 +925,7 @@ GameObject:
   - component: {fileID: 245797409}
   m_Layer: 0
   m_Name: TrackWall 7
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1022,7 +1022,7 @@ GameObject:
   - component: {fileID: 264228068}
   m_Layer: 0
   m_Name: TrackWall 5
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1370,7 +1370,7 @@ GameObject:
   - component: {fileID: 330736336}
   m_Layer: 0
   m_Name: TrackWall 1
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2925,7 +2925,7 @@ GameObject:
   - component: {fileID: 812152184}
   m_Layer: 0
   m_Name: TrackWall 11
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3088,7 +3088,7 @@ GameObject:
   - component: {fileID: 843875359}
   m_Layer: 0
   m_Name: TrackWall 3
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3925,7 +3925,7 @@ GameObject:
   - component: {fileID: 1028422573}
   m_Layer: 0
   m_Name: TrackWall 14
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4333,7 +4333,7 @@ GameObject:
   - component: {fileID: 1158926365}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4422,7 +4422,7 @@ GameObject:
   - component: {fileID: 1186494690}
   m_Layer: 0
   m_Name: TrackWall 4
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5277,6 +5277,10 @@ PrefabInstance:
       propertyPath: soundManager
       value: 
       objectReference: {fileID: 975180260}
+    - target: {fileID: 8832943979080636817, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: cameraFollow
+      value: 
+      objectReference: {fileID: 487957015}
     m_RemovedComponents:
     - {fileID: 4085156392733271720, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
     - {fileID: 627556911, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
@@ -6953,7 +6957,7 @@ GameObject:
   - component: {fileID: 1733156175}
   m_Layer: 0
   m_Name: TrackWall 9
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7358,6 +7362,10 @@ PrefabInstance:
       propertyPath: soundManager
       value: 
       objectReference: {fileID: 975180260}
+    - target: {fileID: 8832943979080636817, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
+      propertyPath: cameraFollow
+      value: 
+      objectReference: {fileID: 963194229}
     m_RemovedComponents:
     - {fileID: 627556911, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
     - {fileID: 4085156392733271720, guid: 79d0ca8b77e301442afdb49f102e8aed, type: 3}
@@ -7376,7 +7384,7 @@ GameObject:
   - component: {fileID: 1877801587}
   m_Layer: 0
   m_Name: TrackWall 10
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8309,7 +8317,7 @@ GameObject:
   - component: {fileID: 2040211743}
   m_Layer: 0
   m_Name: TrackWall 2
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8477,7 +8485,7 @@ GameObject:
   - component: {fileID: 2052850595}
   m_Layer: 0
   m_Name: TrackWall 12
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8765,7 +8773,7 @@ GameObject:
   - component: {fileID: 2098629392}
   m_Layer: 0
   m_Name: TrackWall 8
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

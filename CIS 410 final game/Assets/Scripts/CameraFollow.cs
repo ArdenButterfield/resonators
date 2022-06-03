@@ -21,16 +21,40 @@ public class CameraFollow : MonoBehaviour {
 	// What is the target position for the camera to be relative to the car? i.e. 8 meters behind, 3 meters above.
 	Vector3 cameraDistanceFromCar = Vector3.back * 8 + Vector3.up * 3;
 
+	// Where we will position the camera if the main location above is blocked.
+	Vector3 secondaryCameraLocation = Vector3.up * 10;
+
+	Quaternion secondaryCameraRotation;
+	bool useAlternateCameraPos;
 
 	void Start(){
+		secondaryCameraRotation = Quaternion.FromToRotation(Vector3.forward, Vector3.down);
+
 		transform.position = carTransform.position + carTransform.rotation * cameraDistanceFromCar;
 		transform.rotation = carTransform.rotation;
+
+		useAlternateCameraPos = false;
 	}
+
+	// Called by the cylinder collider inside of the car for detecting collisions in the normal camera path.
+    public void whichCameraPos(bool alternate)
+    {
+        useAlternateCameraPos = alternate;
+    }
 
 	void FixedUpdate()
 	{
-		Vector3 targetPosition = carTransform.position + carTransform.rotation * cameraDistanceFromCar;
-		Quaternion targetRotation = carTransform.rotation;
+		Vector3 targetPosition;
+		Quaternion targetRotation;
+		if (useAlternateCameraPos) {
+			Vector3 carRotationVector = carTransform.rotation.eulerAngles;
+			targetPosition = carTransform.position + secondaryCameraLocation;
+			targetRotation = Quaternion.Euler(new Vector3(90,carTransform.rotation.eulerAngles.y,0));
+		} else {
+			targetPosition = carTransform.position + carTransform.rotation * cameraDistanceFromCar;
+			targetRotation = carTransform.rotation;
+		}
+		
 
 		if (swingAround) {
 			// If we want the camera to swing around, we don't snap immediately to the target position and rotation, but

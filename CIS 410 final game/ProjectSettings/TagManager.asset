@@ -8,6 +8,7 @@ TagManager:
   - checkpoint
   - player1
   - player2
+  - wall
   layers:
   - Default
   - TransparentFX
