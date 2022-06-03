@@ -16,7 +16,7 @@ public class CameraBlockage : MonoBehaviour
     void OnTriggerEnter(Collider other) {
         if (other.CompareTag("wall"))
         {
-            print("colliding.");
+            //print("colliding.");
             cameraFollow.whichCameraPos(true);
             numCollisions += 1;
         }
@@ -25,7 +25,7 @@ public class CameraBlockage : MonoBehaviour
     void OnTriggerExit(Collider other) {
         if (other.CompareTag("wall"))
         {
-            print("colliding.");
+            //print("colliding.");
             numCollisions -= 1;
             if (numCollisions == 0)
             {
