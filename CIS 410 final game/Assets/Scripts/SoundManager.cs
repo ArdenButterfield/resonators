@@ -108,7 +108,7 @@ public class SoundManager : MonoBehaviour
 
     public void startDrift(int carNumber) 
     {
-        print("start drift");
+        //print("start drift");
         AudioSource playSource;
         if (carNumber == 1) {
             playSource = car1DriftSource;
@@ -120,7 +120,7 @@ public class SoundManager : MonoBehaviour
 
     public void stopDrift(int carNumber) 
     {
-        print("stop drift");
+        //print("stop drift");
         AudioSource playSource;
         if (carNumber == 1) {
             playSource = car1DriftSource;

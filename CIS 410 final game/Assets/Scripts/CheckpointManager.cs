@@ -152,7 +152,11 @@ public class CheckpointManager : MonoBehaviour
     {
         raceStarted = true;
         p1RaceTimer.StartTimer();
-        p2RaceTimer.StartTimer();
+
+        // Only start P2 timer if they're racing!
+        // DON'T change this; P1 race needs this to end properly.
+        if (PlayerPrefs.GetInt("singleplayer") == 0)
+            p2RaceTimer.StartTimer();
 
         soundmanager.startTheMusic();
     }
