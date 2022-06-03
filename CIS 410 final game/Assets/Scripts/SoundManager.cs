@@ -19,8 +19,11 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] driftSounds;
     public AudioClip[] crashSounds;
     public AudioClip[] respawnSounds;
+    
+    public AudioClip winSound;
     public AudioClip tick;
     public AudioClip drift;
+
     public float driftVolume;
 
     // Start is called before the first frame update
@@ -116,6 +119,15 @@ public class SoundManager : MonoBehaviour
             playSource = car2DriftSource;
         }
         playSource.volume = driftVolume;
+    }
+
+    public void playWin()
+    {
+        musicSource.Stop();
+        musicKickSource.Stop();
+        car1FXSource.volume = 0f;
+        car2FXSource.volume = 0f;
+        countdownSource.PlayOneShot(winSound, 0.5f);
     }
 
     public void stopDrift(int carNumber) 

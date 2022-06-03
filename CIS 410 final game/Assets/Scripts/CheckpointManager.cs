@@ -170,7 +170,7 @@ public class CheckpointManager : MonoBehaviour
             WinPanelText.text = ("Player 2 Wins!");
         else
             WinPanelText.text = ("This should not happen!");
-
+        soundmanager.playWin();
         WinPanel.SetActive(true);
     }
 
