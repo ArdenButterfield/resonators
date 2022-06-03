@@ -2809,6 +2809,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: cf7ae3e15a4064d84b19ebb0362aaddb, type: 3}
     - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: driftVolume
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
       propertyPath: coinPickups.Array.size
       value: 8
       objectReference: {fileID: 0}
@@ -63294,7 +63298,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
