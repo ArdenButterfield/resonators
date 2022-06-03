@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 // Checkpoint Manager
 // By: Arden Butterfield, Donny Ebel
 // Arden wrote the first version
-// Last updated: 5/25/22 Donny - rewrote most of UpdateCheckpoints()
+// Last updated: 6/2/22 Donny
 
 public class CheckpointManager : MonoBehaviour
 {

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 // Reference Credit: ArcadeKart.cs from Karting Microgame @ learn.unity.com/project/karting-template
 // Adapted by: Donny Ebel (mechanics manager)
 // Respawn, drifting, and boosting by me
-// Last updated; 5/25/22 Donny
+// Last updated; 6/2/22 Donny
 
 public class KartController : MonoBehaviour
 {
