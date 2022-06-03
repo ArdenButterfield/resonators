@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.65705264, g: 0.18648198, b: 0.14343855, a: 1}
+  m_IndirectSpecularColor: {r: 0.6572215, g: 0.18648139, b: 0.14316794, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2796,6 +2796,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: sound
       objectReference: {fileID: 0}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: winSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e2c4d17c72ead437fafccb0814b6eb19, type: 3}
     - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
       propertyPath: musicKick
       value: 
