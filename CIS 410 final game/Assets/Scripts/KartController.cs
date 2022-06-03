@@ -414,6 +414,8 @@ public class KartController : MonoBehaviour
 
     private void StartDriftEffects()
     {
+        soundManager.startDrift(carNumber);
+
         if (isEmitting)
             return;
 
@@ -425,6 +427,7 @@ public class KartController : MonoBehaviour
 
     private void StopDriftEffects()
     {
+        soundManager.stopDrift(carNumber);
         if (!isEmitting)
             return;
 

@@ -9,6 +9,8 @@ public class SoundManager : MonoBehaviour
     public AudioSource car1FXSource;
     public AudioSource car2FXSource;
     public AudioSource countdownSource;
+    public AudioSource car1DriftSource;
+    public AudioSource car2DriftSource;
 
     public AudioClip[] coinPickups;
     public AudioClip musicLoop;
@@ -18,15 +20,28 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] crashSounds;
     public AudioClip[] respawnSounds;
     public AudioClip tick;
+    public AudioClip drift;
+    public float driftVolume;
 
     // Start is called before the first frame update
     void Start()
     {
         musicSource.loop = true;
         musicKickSource.loop = true;
+        car1DriftSource.loop = true;
+        car2DriftSource.loop = true;
+
+        car1DriftSource.clip = drift;
+        car2DriftSource.clip = drift;
+
         musicSource.clip = musicLoop;
         musicKickSource.clip = musicKick;
         countdownSource.clip = tick;
+
+        car1DriftSource.volume = 0f;
+        car2DriftSource.volume = 0f;
+        car1DriftSource.Play();
+        car2DriftSource.Play();
     }
 
 
@@ -89,5 +104,29 @@ public class SoundManager : MonoBehaviour
         }
         int index = Random.Range(0, respawnSounds.Length) % respawnSounds.Length;
         playSource.PlayOneShot(respawnSounds[index], 0.5f);
+    }
+
+    public void startDrift(int carNumber) 
+    {
+        print("start drift");
+        AudioSource playSource;
+        if (carNumber == 1) {
+            playSource = car1DriftSource;
+        } else {
+            playSource = car2DriftSource;
+        }
+        playSource.volume = driftVolume;
+    }
+
+    public void stopDrift(int carNumber) 
+    {
+        print("stop drift");
+        AudioSource playSource;
+        if (carNumber == 1) {
+            playSource = car1DriftSource;
+        } else {
+            playSource = car2DriftSource;
+        }
+        playSource.volume = 0f;
     }
 }
