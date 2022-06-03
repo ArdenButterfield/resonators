@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.3731193, g: 0.38073996, b: 0.3587269, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2177,6 +2177,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   singleplayerToggle: {fileID: 1378689374}
+  controlInstructions: {fileID: 1811687116}
+  singlePlayerInstructions: move with WASD, boost is v (or right shift), drift is
+    spacebar, HOLD r to respawn to checkpoint
+  twoPlayerInstructions: 'Player 1: move with WASD, boost is v (or right shift),
+    drift is spacebar, HOLD r to respawn to checkpoint
+
+    Player 2: move with PL;'',
+    boost is Return, drift is right shift, HOLD \ to respawn to checkpoint'
 --- !u!1 &1524620414
 GameObject:
   m_ObjectHideFlags: 0
