@@ -4143,6 +4143,10 @@ PrefabInstance:
       value: sound
       objectReference: {fileID: 0}
     - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: winSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e2c4d17c72ead437fafccb0814b6eb19, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
       propertyPath: musicKick
       value: 
       objectReference: {fileID: 8300000, guid: be75a6972c0344ab8a46549ff8f11d1e, type: 3}
@@ -4150,6 +4154,10 @@ PrefabInstance:
       propertyPath: musicLoop
       value: 
       objectReference: {fileID: 8300000, guid: 41fb9b7c2495741d6ac5ac6f032e6850, type: 3}
+    - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
+      propertyPath: driftVolume
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7423377900962097722, guid: 8fc7b910cb14e40098270b8776a3221b, type: 3}
       propertyPath: coinPickups.Array.data[0]
       value: 
